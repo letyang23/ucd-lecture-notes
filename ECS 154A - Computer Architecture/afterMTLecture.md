@@ -357,18 +357,216 @@ Output (Fill in S and R)
 
 `Group states together by the output`
 
-A group
+###### **A group**
 
-| 0/1  |      |      |      |      |      |      |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| A/A  | Si   | S0   | S1   | S00  | S000 | S100 |
-| A/B  | S10  | S01  | S001 | S010 |      |      |
-| B/B  | S11  |      |      |      |      |      |
+| 0/1       |      |      |      |      |      |      |
+| --------- | ---- | ---- | ---- | ---- | ---- | ---- |
+| A/A (*A*) | Si   | S0   | S1   | S00  | S000 | S100 |
+| A/B (*B*) | S10  | S01  | S001 | S010 |      |      |
+| B/B (*C*) | S11  |      |      |      |      |      |
 
-B group
+###### **B group**
+
+| 0/1       |      |      |
+| --------- | ---- | ---- |
+| B/B (*D*) | S011 | S111 |
+| A/B (*E*) | S101 | S110 |
+
+
+
+`Then we need to rename the states`
+
+New *A* group
+
+| 0/1       |      |      |      |      |
+| --------- | ---- | ---- | ---- | ---- |
+| A/A (*a*) | Si   |      |      |      |
+| A/B (*b*) | S0   | S00  | S000 | S100 |
+| B/C (*c*) | S1   |      |      |      |
+
+New *B* group
+
+| 0/1       |      |      |
+| --------- | ---- | ---- |
+| A/E (*e*) | S10  | S010 |
+| B/D (*f*) | S01  | S001 |
+
+New *C* group
+
+- Only S11, cannot breakup with others
+
+New *D* group
+
+| 0/1       |      |      |
+| --------- | ---- | ---- |
+| E/D (*g*) | S011 | S111 |
+
+New *E* group
+
+| 0/1       |      |
+| --------- | ---- |
+| B/D (*h*) | S101 |
+| A/E (*i*) | S110 |
+
+
+
+`We regroup again`
+
+New *a* group
+
+- Only Si
+
+New *b* group
+
+| 0/1  |      |      |      |      |
+| ---- | ---- | ---- | ---- | ---- |
+| B/E  | S0   | S00  | S000 | S001 |
+
+New *c* group
+
+- Only S1
+
+New *d* group
 
 | 0/1  |      |      |
 | ---- | ---- | ---- |
-| B/B  | S011 | S111 |
-| A/B  | S101 | S110 |
+| B/H  | S10  | S010 |
 
+New *e* group
+
+| 0/1  |      |      |
+| ---- | ---- | ---- |
+| D/G  | S01  | S001 |
+
+New *f* group
+
+- Only S11
+
+New *g* group
+
+| 0/1  |      |      |
+| ---- | ---- | ---- |
+| I/G  | S011 | S111 |
+
+New *h* group
+
+- Only S101
+
+New *i* group
+
+- Only S110
+
+`Since they can't be change group further, so we could draw the new simplified diagram`
+
+
+
+##### Simplified Diagram
+
+<img src="afterMTLecture.assets/Screen Shot 2023-02-22 at 3.14.20 PM.png" alt="Screen Shot 2023-02-22 at 3.14.20 PM" style="zoom:70%;" />
+
+
+
+## [State Encoding, Transition Tables, Next State Equations (Lecture 02-10-2023)](https://video.ucdavis.edu/media/ECS154ALecture02-10-2022/1_m015iskj)
+
+##### Choose Encodings
+
+- We need to pick a binary representation for our states to represent them in hardware 
+- Encodings are arbitrary but choosing good encodings can simplify state transition logic 
+- One way to choose a decent encoding is to place the states inside of a Kmap
+
+- Place the states that transition to each other next to each other 
+  - If they transition to each other and are next to each other in the Kmap we will be able to eliminate terms in their transition functions 
+- The state’s encoding will be based on its location in the Kmap
+
+`since we have 9 states, we have to use 4 bits (3 bits represents 8 states)`
+
+###### Encoding
+
+| S3S2/S1S0 | 00   | 01   | 11   | 10   |
+| --------- | ---- | ---- | ---- | ---- |
+| 00        | Si   | S1   | S11  | S110 |
+| 01        | S*_0 | S_10 | S*11 | d    |
+| 11        | S_01 | S101 | d    | d    |
+| 10        | d    | d    | d    | d    |
+
+###### Transition Table
+
+- Bit Input = 0
+
+| S3S2/S1S0 | 00   | 01   | 11   | 10   |
+| --------- | ---- | ---- | ---- | ---- |
+| 00        | S*_0 | S_10 | S110 | S*_0 |
+| 01        | S*_0 | S*_0 | S110 | d    |
+| 11        | S_10 | S_10 | d    | d    |
+| 10        | d    | d    | d    | d    |
+
+- Bit Input = 1
+
+| S3S2/S1S0 | 00   | 01   | 11   | 10   |
+| --------- | ---- | ---- | ---- | ---- |
+| 00        | S1   | S11  | S*11 | S101 |
+| 01        | S_01 | S101 | S*11 | d    |
+| 11        | S*11 | S*11 | d    | d    |
+| 10        | d    | d    | d    | d    |
+
+
+
+##### Using Flip-Flop
+
+- Use D Flip Fop to store S3
+  - D = 0, Q Next = 0; D = 1 Q next = 1
+
+- Bit input 0
+
+| S3S2/S1S0 | 00           | 01           | 11           | 10           |
+| --------- | ------------ | ------------ | ------------ | ------------ |
+| 00        | S*_0 / **0** | S_10 / **0** | S110 / **1** | S*_0 / **0** |
+| 01        | S*_0 / **0** | S*_0 / **0** | S110 / **1** | d            |
+| 11        | S_10 / **0** | S_10 / **0** | d            | d            |
+| 10        | d            | d            | d            | d            |
+
+- Bit input 1
+
+| S3S2/S1S0 | 00           | 01           | 11           | 10           |
+| --------- | ------------ | ------------ | ------------ | ------------ |
+| 00        | S1 / **0**   | S11 / **1**  | S*11 / **1** | S101 / **0** |
+| 01        | S_01/ **0**  | S101 / **0** | S*11 / **1** | d            |
+| 11        | S*11 / **1** | S*11 / **1** | d            | d            |
+| 10        | d            | d            | d            | d            |
+
+##### K-map
+
+![Screen Shot 2023-02-22 at 6.53.32 PM](afterMTLecture.assets/Screen Shot 2023-02-22 at 6.53.32 PM.png)
+
+Red: S3S2
+
+Brown: S1*Bit Input
+
+Green: S2!S0 * Bit Input
+
+
+
+###### Using T Flip Flop
+
+ | T    | Q    |
+  | ---- | ---- |
+  | 0    | Q    |
+  | 1    | ~Q   |
+
+- Bit input 0
+
+| S3S2/S1S0 | 00           | 01           | 11           | 10           |
+| --------- | ------------ | ------------ | ------------ | ------------ |
+| 00        | S*_0 / **0** | S_10 / **0** | S110 / **1** | S*_0 / **0** |
+| 01        | S*_0 / **0** | S*_0 / **0** | S110 / **1** | d            |
+| 11        | S_10 / **0** | S_10 / **0** | d            | d            |
+| 10        | d            | d            | d            | d            |
+
+- Bit input 1
+
+| S3S2/S1S0 | 00           | 01           | 11           | 10           |
+| --------- | ------------ | ------------ | ------------ | ------------ |
+| 00        | S1 / **0**   | S11 / **1**  | S*11 / **1** | S101 / **0** |
+| 01        | S_01/ **0**  | S101 / **0** | S*11 / **1** | d            |
+| 11        | S*11 / **1** | S*11 / **1** | d            | d            |
+| 10        | d            | d            | d            | d            |
