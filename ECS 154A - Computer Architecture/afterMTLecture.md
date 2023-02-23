@@ -536,7 +536,7 @@ New *i* group
 
 ##### K-map
 
-![Screen Shot 2023-02-22 at 6.53.32 PM](afterMTLecture.assets/Screen Shot 2023-02-22 at 6.53.32 PM.png)
+<img src="afterMTLecture.assets/Screen Shot 2023-02-22 at 6.53.32 PM.png" alt="Screen Shot 2023-02-22 at 6.53.32 PM" style="zoom:80%;" />
 
 Red: S3S2
 
