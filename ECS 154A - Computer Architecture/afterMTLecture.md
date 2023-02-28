@@ -513,12 +513,18 @@ New *i* group
 
 ##### Using Flip-Flop
 
-- Use D Flip Fop to store S3
-  - D = 0, Q Next = 0; D = 1 Q next = 1
+###### Use D Flip Fop to store S3
+
+| D    | Q_next |
+| ---- | ------ |
+| 0    | 0      |
+| 1    | 1      |
+
+
 
 - Bit input 0
 
-| S3S2/S1S0 | 00           | 01           | 11           | 10           |
+| S3S2/S1S0 | <u>0</u>0    | <u>0</u>1    | <u>1</u>1    | <u>1</u>0    |
 | --------- | ------------ | ------------ | ------------ | ------------ |
 | 00        | S*_0 / **0** | S_10 / **0** | S110 / **1** | S*_0 / **0** |
 | 01        | S*_0 / **0** | S*_0 / **0** | S110 / **1** | d            |
@@ -527,7 +533,7 @@ New *i* group
 
 - Bit input 1
 
-| S3S2/S1S0 | 00           | 01           | 11           | 10           |
+| S3S2/S1S0 | <u>0</u>0    | <u>0</u>1    | <u>1</u>1    | <u>1</u>0    |
 | --------- | ------------ | ------------ | ------------ | ------------ |
 | 00        | S1 / **0**   | S11 / **1**  | S*11 / **1** | S101 / **0** |
 | 01        | S_01/ **0**  | S101 / **0** | S*11 / **1** | d            |
@@ -546,27 +552,402 @@ Green: S2!S0 * Bit Input
 
 
 
-###### Using T Flip Flop
+###### Using T Flip Flop to store S2
 
  | T    | Q    |
   | ---- | ---- |
   | 0    | Q    |
   | 1    | ~Q   |
 
+`Bits are same, put 0. Bits are different, put 1`
+
 - Bit input 0
 
-| S3S2/S1S0 | 00           | 01           | 11           | 10           |
-| --------- | ------------ | ------------ | ------------ | ------------ |
-| 00        | S*_0 / **0** | S_10 / **0** | S110 / **1** | S*_0 / **0** |
-| 01        | S*_0 / **0** | S*_0 / **0** | S110 / **1** | d            |
-| 11        | S_10 / **0** | S_10 / **0** | d            | d            |
-| 10        | d            | d            | d            | d            |
+| S3S2/S1S0 | 0<u>0</u>                  | 0<u>1</u>                  | 1<u>1</u>                  | 1<u>0</u>    |
+| --------- | -------------------------- | -------------------------- | -------------------------- | ------------ |
+| 00        | S*_0 / **0**               | S_10 / **0**               | S110 / **1** (will change) | S*_0 / **0** |
+| 01        | S*_0 / **0**               | S*_0 / **1** (will change) | S110 / **1**               | d            |
+| 11        | S_10 / **1** (will change) | S_10 / **0**               | d                          | d            |
+| 10        | d                          | d                          | d                          | d            |
 
 - Bit input 1
 
+| S3S2/S1S0 | 0<u>0</u>    | 0<u>1</u>    | 1<u>1</u>    | 1<u>0</u>    |
+| --------- | ------------ | ------------ | ------------ | ------------ |
+| 00        | S1 / **1**   | S11 / **0**  | S*11 / **0** | S101 / **1** |
+| 01        | S_01/ **0**  | S101 / **0** | S*11 / **0** | d            |
+| 11        | S*11 / **1** | S*11 / **0** | d            | d            |
+| 10        | d            | d            | d            | d            |
+
+Solve the K-Map
+
+Red: S3*S2*~Bit Input
+
+Blue: ~S2 * S1
+
+Green: !S2!S0 * Bit Input
+
+
+
+###### Using SR Flip Flop to store S1
+
+| S    | R    | Q Next |
+| ---- | ---- | ------ |
+| 0    | 0    | Q      |
+| 0    | 1    | 0      |
+| 1    | 0    | 1      |
+| 1    | 1    | X      |
+
+| Q    | Q Next | S    | R    |
+| ---- | ------ | ---- | ---- |
+| 0    | 0      | 0    | d    |
+| 0    | 1      | 1    | 0    |
+| 1    | 0      | 0    | 1    |
+| 1    | 1      | d    | 0    |
+
+- S behave like D, you put in what you want, except in the case from 1 -> 1 it is don't care
+- R behaves like ~D, you put in the **opposite** of what you want, except for the case from 0->0 is don't care
+
+
+
+## [Finish Next State Equations, Build Circuit (Lecture 02-13-2023)](https://video.ucdavis.edu/media/ECS154ALecture02-13-2023/1_39zg2edc)
+
+##### SR Flip Flop for S1
+
+###### S K-map
+
+- Original Encoding
+
+| S3S2/S1S0 | 00   | 01   | 11   | 10   |
+| --------- | ---- | ---- | ---- | ---- |
+| 00        | Si   | S1   | S11  | S110 |
+| 01        | S*_0 | S_10 | S*11 | d    |
+| 11        | S_01 | S101 | d    | d    |
+| 10        | d    | d    | d    | d    |
+
+- Bit Input = 0
+
 | S3S2/S1S0 | 00           | 01           | 11           | 10           |
 | --------- | ------------ | ------------ | ------------ | ------------ |
-| 00        | S1 / **0**   | S11 / **1**  | S*11 / **1** | S101 / **0** |
-| 01        | S_01/ **0**  | S101 / **0** | S*11 / **1** | d            |
-| 11        | S*11 / **1** | S*11 / **1** | d            | d            |
+| <u>0</u>0 | S*_0 / **0** | S_10 / **0** | S110 / **0** | S*_0 / **0** |
+| <u>0</u>1 | S*_0 / **0** | S*_0 / **0** | S110 / **0** | d            |
+| <u>1</u>1 | S_10 / **0** | S_10 / **0** | d            | d            |
+| <u>1</u>0 | d            | d            | d            | d            |
+
+`Q is current state, Q next is after transition state.` `If transition from 1 to 1, it's d`
+
+- Bit Input = 1
+
+| S3S2/S1S0 | 00           | 01           | 11          | 10           |
+| --------- | ------------ | ------------ | ----------- | ------------ |
+| <u>0</u>0 | S1 / **0**   | S11 / **0**  | S*11 /**0** | S101 / **1** |
+| <u>0</u>1 | S_01/ **1**  | S101 / **1** | S*11 /      | d            |
+| <u>1</u>1 | S*11 / **0** | S*11 / **0** | d           | d            |
+| <u>1</u>0 | d            | d            | d           | d            |
+
+###### R K-map
+
+- Bit Input = 0
+
+| S3S2/S1S0 | 00           | 01           | 11           | 10           |
+| --------- | ------------ | ------------ | ------------ | ------------ |
+| <u>0</u>0 | S*_0 / **d** | S_10 / **d** | S110 / **d** | S*_0 / **d** |
+| <u>0</u>1 | S*_0 / **d** | S*_0 / **d** | S110 / **d** | d            |
+| <u>1</u>1 | S_10 / **1** | S_10 / **1** | d            | d            |
+| <u>1</u>0 | d            | d            | d            | d            |
+
+`example: S*_0 S3 transition from 0 to 0, so it is d`
+
+- Bit Input = 1
+
+| S3S2/S1S0 | 00           | 01           | 11           | 10           |
+| --------- | ------------ | ------------ | ------------ | ------------ |
+| <u>0</u>0 | S1 / **d**   | S11 / **d**  | S*11 /**d**  | S101 / **0** |
+| <u>0</u>1 | S_01 / **0** | S101 / **0** | S*11 / **d** | d            |
+| <u>1</u>1 | S*11 / **1** | S*11 / **1** | d            | d            |
+| <u>1</u>0 | d            | d            | d            | d            |
+
+###### K-map
+
+<img src="afterMTLecture.assets/Screen Shot 2023-02-22 at 8.30.44 PM.png" alt="Screen Shot 2023-02-22 at 8.30.44 PM" style="zoom:50%;" />
+
+S1 S input
+
+Red: `Bitinput * !S3!S1S0`
+
+Green: `Bitinput * S3!S2`
+
+<img src="afterMTLecture.assets/Screen Shot 2023-02-22 at 8.33.07 PM.png" alt="Screen Shot 2023-02-22 at 8.33.07 PM" style="zoom:50%;" />
+
+S1 R input
+
+Red: `S1`
+
+
+
+##### JK Flip Flop
+
+- Behavior
+
+| J    | K    | Q Next |
+| ---- | ---- | ------ |
+| 0    | 0    | Q      |
+| 0    | 1    | 0      |
+| 1    | 0    | 1      |
+| 1    | 1    | ~Q     |
+
+| Q    | Q Next | J    | K    |
+| ---- | ------ | ---- | ---- |
+| 0    | 0      | 0    | d    |
+| 0    | 1      | 1    | d    |
+| 1    | 0      | d    | 1    |
+| 1    | 1      | d    | 0    |
+
+J K-map
+
+- Bit Input = 0
+
+| S3S2/S1S0 | 00           | 01           | 11           | 10           |
+| --------- | ------------ | ------------ | ------------ | ------------ |
+| 0<u>0</u> | S*_0 / **1** | S_10 / **1** | S110 / **0** | S*_0 / **1** |
+| 0<u>1</u> | S*_0 / **d** | S*_0 / **d** | S110 / **d** | d            |
+| 1<u>1</u> | S_10 / **d** | S_10 / **d** | d            | d            |
+| 1<u>0</u> | d            | d            | d            | d            |
+
+- Bit Input = 1
+
+  | S3S2/S1S0 | 00           | 01           | 11           | 10           |
+  | --------- | ------------ | ------------ | ------------ | ------------ |
+  | 0<u>0</u> | S1 / **0**   | S11 / **0**  | S*11 / **1** | S101 / **1** |
+  | 0<u>1</u> | S_01/ **d**  | S101 / **d** | S*11 / **d** | d / **d**    |
+  | 1<u>1</u> | S*11 / **d** | S*11 / **d** | d            | d            |
+  | 1<u>0</u> | d            | d            | d            | d            |
+
+`When original state is 1, in J k-map it is don't care (d)`
+
+K K-map
+
+- Bit Input = 0
+
+| S3S2/S1S0 | 00           | 01           | 11           | 10           |
+| --------- | ------------ | ------------ | ------------ | ------------ |
+| 0<u>0</u> | S*_0 / **d** | S_10 / **d** | S110 / **d** | S*_0 / **d** |
+| 0<u>1</u> | S*_0 / **0** | S*_0 / **0** | S110 / **1** | d            |
+| 1<u>1</u> | S_10 / **0** | S_10 / **0** | d            | d            |
+| 1<u>0</u> | d            | d            | d            | d            |
+
+- Bit Input = 1
+
+| S3S2/S1S0 | 00           | 01           | 11           | 10           |
+| --------- | ------------ | ------------ | ------------ | ------------ |
+| 00        | S1 / **d**   | S11 / **d**  | S*11 / **d** | S101 / **d** |
+| 01        | S_01 / **0** | S101 / **0** | S*11 / **0** | d            |
+| 11        | S*11 / **0** | S*11 / **0** | d            | d            |
 | 10        | d            | d            | d            | d            |
+
+`when original state is 0, in k kmap, it is don't care`
+
+###### K-Map
+
+Red: S3 + !Bit Input
+
+Green: !S3 + !S2 + Bit Input
+
+
+
+##### Output
+
+| S3S2/S1S0 | 00           | 01           | 11           | 10          |
+| --------- | ------------ | ------------ | ------------ | ----------- |
+| 00        | Si / **0**   | S1 / **0**   | S11/ **0**   | S110 /**1** |
+| 01        | S*_0 / **0** | S_10 / **0** | S*11 / **1** | d           |
+| 11        | S_01 / **0** | S101 / **1** | d            | d           |
+| 10        | d            | d            | d            | d           |
+
+
+
+##### Build the Circuit
+
+`Logism can build the circuits for you! Using Project -> Analyze Circuit`
+
+ [FlipFlopLecture.circ](../../../../../../../Logism/FlipFlopLecture.circ) 
+
+
+
+## [Run Moore Circuit, Sequential Circuit Testing, Start Mealy Model Example (Discussion 02-13-2023)](https://video.ucdavis.edu/media/ECS154ADiscussion02-13-2023/1_v0vt9ugu)
+
+##### Build the Circuit
+
+ [FlipFlopLecture.circ](../../../../../../../Logism/FlipFlopLecture.circ) 
+
+`Use Simulate - Tick to check the output`
+
+`Sequential Circuit Testing`
+
+##### Mealy Model Example
+
+In the last group of 4 bits did the pattern **1010** or **1100** appear
+
+```mermaid
+stateDiagram-v2
+    Si --> S0: 0 / 0
+		Si --> S1: 1 / 0
+		S0 --> S00: 0 / 0
+		S0 --> S01: 1 / 0
+		S00 --> S000:0 / 0
+		S00 --> S001:1 / 0
+		S01 --> S010:0 / 0
+		S01 --> S011: 1 / 0
+		S1 --> S10:0 / 0
+		S1 --> S11:1 / 0
+		S10 --> S100:0 / 0
+		S10 --> S101:1 / 0
+		S11 --> S110:0 / 0
+		S11 --> S111:1 / 0
+		S000 --> newSi: d / 0
+    S001 --> newSi: d / 0
+    S010 --> newSi: d / 0
+    S011 --> newSi: d / 0
+    S100 --> newSi: d / 0
+    S101 --> newSi:0 / 1, 1 / 0
+    S110 --> newSi:0 / 1, 1 / 0
+```
+
+`0 / 0:  get a 0 and output a 0`
+
+`How is it different between Mealy and Moore?`
+
+- The output of mealy depends on input and state, we don't need to write another state
+
+| 0/0, 1/0 (Group A) | Si     | S0   | S00  | S01  | S10  | S11  | S000 | S100 | S111 | S1   | S001 | S011 | S010 |
+| ------------------ | ------ | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0/1, 1/0 (Group B) | S101   | S110 |      |      |      |      |      |      |      |      |      |      |      |
+| 0/0, 1/1           | (None) |      |      |      |      |      |      |      |      |      |      |      |      |
+| 0/1, 1/1           | (None) |      |      |      |      |      |      |      |      |      |      |      |      |
+
+Mealy: Number Starting States can be up to 2 ^ (number of inputs + number of outputs)
+
+Moore: States can be up to 2 ^ (number of outputs)
+
+| 0/1             |      |      |      |      |      |      |      |      |      |      |      |
+| --------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| (Group *A*) A/A | Si   | S0   | S01  | S000 | S100 | S111 | S001 | S010 | S011 | S00  | S1   |
+| (Group *B*) A/B | S10  |      |      |      |      |      |      |      |      |      |      |
+| (Group *C*)B/A  | S11  |      |      |      |      |      |      |      |      |      |      |
+
+Group *D*: S101, S110
+
+
+
+------
+
+
+
+| 0/1            |      |      |      |      |      |      |      |      |      |
+| -------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| (Group *a*)A/A | Si   | S0   | S00  | S01  | S000 | S100 | S111 | S001 | S010 |
+| (Group *b*)B/C | S1   |      |      |      |      |      |      |      |      |
+| (Group *c*)    | S10  |      |      |      |      |      |      |      |      |
+| (Group *d*)    | S11  |      |      |      |      |      |      |      |      |
+| (Group *e*)    | S101 | S110 |      |      |      |      |      |      |      |
+
+------
+
+| 0/1               |      |      |      |      |      |      |      |      |      |
+| ----------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| (Group **a**) A/B | Si   |      |      |      |      |      |      |      |      |
+| (Group **b**) A/A | S0   | S00  | S01  | S000 | S100 | S111 | S001 | S010 | S011 |
+| (Group **c**)     | S10  |      |      |      |      |      |      |      |      |
+| (Group **d**)     | S11  |      |      |      |      |      |      |      |      |
+| (Group **e**)     | S101 | S110 |      |      |      |      |      |      |      |
+
+------
+
+| 0/1        |      |      |      |      |      |      |
+| ---------- | ---- | ---- | ---- | ---- | ---- | ---- |
+| **a**      | Si   |      |      |      |      |      |
+| **b ** B/B | S0   | S00  | S01  |      |      |      |
+| **c** A/A  | S000 | S100 | S111 | S001 | S010 | S011 |
+| **d**      | S10  |      |      |      |      |      |
+| **e**      | S11  |      |      |      |      |      |
+| **f**      | S101 | S110 |      |      |      |      |
+
+------
+
+| 0/1   |      |      |      |      |      |      |
+| ----- | ---- | ---- | ---- | ---- | ---- | ---- |
+| A     | Si   |      |      |      |      |      |
+| B B/B | S0   |      |      |      |      |      |
+| C C/C | S00  | S01  |      |      |      |      |
+| D A/A | S000 | S100 | S111 | S001 | S010 | S011 |
+| E     | S10  |      |      |      |      |      |
+| F     | S11  |      |      |      |      |      |
+| G     | S101 | S110 |      |      |      |      |
+
+
+
+## [Finish Mealy Model Example, Register, Enabled D-FlipFlop (Lecture 02-15-2023)](https://video.ucdavis.edu/media/ECS154ALecture02-15-2023/1_lqgc32vf)
+
+`To test your circuits, if the tester can't find your circuit, need to go to Library-> Logism Evolution Library-> Find your circuits. If change, reload the library. Right click to reload the library.`
+
+`Combinational circuits should not be back to itself.`
+
+| 0/1               |      |      |      |      |      |      |
+| ----------------- | ---- | ---- | ---- | ---- | ---- | ---- |
+| Si                | Si   |      |      |      |      |      |
+| S0 B/B            | S0   |      |      |      |      |      |
+| S1                | S1   |      |      |      |      |      |
+| SGoingToBeBad C/C | S00  | S01  |      |      |      |      |
+| SBad A/A          | S000 | S100 | S111 | S001 | S010 | S011 |
+| S10               | S10  |      |      |      |      |      |
+| S11               | S11  |      |      |      |      |      |
+| SMightBeGood      | S101 | S110 |      |      |      |      |
+
+**K-map**
+
+| S2S1/S0 | 00   | 01   | 11            | 10              |
+| ------- | ---- | ---- | ------------- | --------------- |
+| 0       | Si   | S0   | S0d           | ThrreeBitsMatch |
+| 1       | S10  | S1   | ThreeBitseBad | S11             |
+
+**Simplified Diagram**
+
+```mermaid
+stateDiagram-v2
+	Si --> S0: 0/0
+	S0 --> S0d: d/0
+	Si --> S1: 1/0
+	S1 --> S10: 0/0
+	S1 --> S11: 1/0
+	S0d --> ThreeBitsBad: d/0
+	S10 --> ThreeBitsMatch: 1/0
+	S10 --> ThreeBitsBad: 0/0
+	ThreeBitsBad --> Si: d/0
+	S11 --> ThreeBitsMatch: 0/0
+	S11 --> ThreeBitsBad: 1/0
+	ThreeBitsMatch --> ToSi: 0/1
+	ThreeBitsMatch --> Si: 1/0
+```
+
+`S0d = ThreeBitsBad	MightBe `
+
+![image-20230227043525044](afterMTLecture.assets/image-20230227043525044.png)
+
+##### Logism
+
+ [MealyModel215Lecture.circ](..\..\..\Winter 2023\ECS 154A\MealyModel215Lecture.circ) 
+
+
+
+## [Sequential Building Blocks, Sequential Circuit Timing, Find Min Clock Length (Lecture 02/17/2023)](https://video.ucdavis.edu/media/ECS154ALecture02-17-2023/1_1vns45f8)
+
+##### Logism Examples
+
+- Register
+  - <img src="afterMTLecture.assets/image-20230227044450224.png" alt="image-20230227044450224" style="zoom:60%;" />
+- Enabled Flip-Flop
+  - <img src="afterMTLecture.assets/image-20230227044511189.png" alt="image-20230227044511189" style="zoom:60%;" />
+- Shift Register
+  - <img src="afterMTLecture.assets/image-20230227044623732.png" alt="image-20230227044623732" style="zoom:67%;" />
+
+
