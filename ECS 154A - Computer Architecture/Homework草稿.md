@@ -158,3 +158,49 @@ E1 --> Z1((Give_Merchandise_Out=1, Give_Dime_Out=0, Give_Nickel_Out=1))
 
 ```
 
+
+
+
+
+| Name   | Bits    | Description                                              |
+| ------ | ------- | -------------------------------------------------------- |
+| OpCode | 15 - 12 | Determines what operation should be performed            |
+| C      | 11 - 8  | The destination register. The C in RegC = RegA OP RegB   |
+| A      | 7 - 4   | The first source register. The A in RegC = RegA OP RegB  |
+| B      | 3 - 0   | The second source register. The B in RegC = RegA OP RegB |
+
+| Name      | Bits    | Description                                               |
+| --------- | ------- | --------------------------------------------------------- |
+| OpCode    | 15 - 12 | Determines what operation should be performed             |
+| C         | 11 - 8  | The destination register. The C in RegC = RegA OP Imm     |
+| A         | 7 - 4   | The first source register. The A in RegC = RegA OP Imm    |
+| Immediate | 3 - 0   | The second source register. The Imm in RegC = RegA OP Imm |
+
+| Operation | Encoding (The value in the OpCodeField) | Description               |
+| --------- | --------------------------------------- | ------------------------- |
+| STOP      | 0000                                    | The CPU ceases execution  |
+| NOP       | 0001                                    | Do nothing                |
+| LOAD      | 0010                                    | RegC = Immediate          |
+| MOVE      | 0011                                    | RegC = RegA               |
+| ANDR      | 0100                                    | RegC = RegA AND RegB      |
+| ANDI      | 0101                                    | RegC = RegA AND Immediate |
+| ORR       | 0110                                    | RegC = RegA OR RegB       |
+| ORI       | 0111                                    | RegC = RegA OR Immediate  |
+| XORR      | 1000                                    | RegC = RegA XOR RegB      |
+| XORI      | 1001                                    | RegC = RegA XOR Immediate |
+| NOT       | 1010                                    | RegC = NOT RegA           |
+| NEGATE    | 1011                                    | RegC = -RegA              |
+| ADDR      | 1100                                    | RegC = RegA + RegB        |
+| ADDI      | 1101                                    | RegC = RegA +Immediate    |
+| SUBR      | 1110                                    | RegC = RegA - RegB        |
+| SUBI      | 1111                                    | RegC = RegA - Immediate   |
+
+| Pin         | Size (in bits) | Explanation                                                  |
+| ----------- | -------------- | ------------------------------------------------------------ |
+| Instruction | 16             | The instruction located at Instruction_Address               |
+| ClkIn       | 1              | The Clock. Connect this to the clock ports of your registers/flip-flops. Do nothing else with this. |
+
+| Pin                     | Size (in bits) | Explanation                                                  |
+| ----------------------- | -------------- | ------------------------------------------------------------ |
+| Instruction_Address_Out | 5              | The address of the instruction you want to execute           |
+| Reg0-15                 | 4              | The values in the register file. This has already been connected for you |

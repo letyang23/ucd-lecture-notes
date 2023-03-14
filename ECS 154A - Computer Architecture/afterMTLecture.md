@@ -950,4 +950,171 @@ stateDiagram-v2
 - Shift Register
   - <img src="afterMTLecture.assets/image-20230227044623732.png" alt="image-20230227044623732" style="zoom:67%;" />
 
+- Counter
+  - | CountUp | Count 2 | Count 1 | Count 0 |
+    | ------- | ------- | ------- | ------- |
+    | 1       | 0       | 0       | 0       |
+    | 1       | 0       | 0       | 1       |
+    | 1       | 0       | 1       | 0       |
+    | 1       | 0       | 1       | 1       |
+    | 1       | 1       | 0       | 0       |
+    | 1       | 1       | 0       | 1       |
+    | 1       | 1       | 1       | 0       |
+    | 1       | 1       | 1       | 1       |
+  
+    <img src="afterMTLecture.assets/Screen Shot 2023-03-07 at 3.10.43 AM.png" alt="Screen Shot 2023-03-07 at 3.10.43 AM" style="zoom:50%;" />
+
+
+
+##### Sequential Circuit Timing
+
+- Flip Flops have the following attributes
+  - Clock to Q Contamination delay ($t_{ccq}$): The amount of time **after** the clock edge arrives before Q (the bit stored) **starts** to change
+  - Clock to Q Propagation delay ($t_{pcq}$): The amount of time **after** the clock edge arrives that it takes for Q (the bit stored) to **stabilize**
+  - Setup time ($t_{setup}$): The amount of time **before** the clock edge arrives that the input into the flip flop must be stable 
+  - Hold Time ($t_{hold}$): The amount of time **after** the clock edge arrives that the input must remain stable (not change)
+    - Normally 0 for most flip flops
+
+  <img src="afterMTLecture.assets/image-20230307215107715.png" alt="image-20230307215107715" style="zoom:50%;" />
+
+##### Finding Minimum Clock Length
+
+- $T_c >= t_{pcq} + t_{pd} + t_{setup}$
+
+  - $T_{pd}$ is the propagation delay of the combinational logic
+
+- How to calculate
+
+- - Write $t_{pcq}$ at the output of each flip flop
+  - In front of each flip flop write + $t_{setup}$
+  - Find the propagation delay through the combinational portion of the circuit
+  - The answer is the maximum delay of the input into each flip flop and the outputs
+
+
+
+###### Example
+
+![image-20230308023836458](afterMTLecture.assets/image-20230308023836458.png)
+
+Before flip flop 9 / 14 / 20
+
+output after flip flop 7+4+5 = 16
+
+so the minimum prop length has to be at least 20.
+
+maximum frequency is 1/20, just the inverse of minimum prop length.
+
+
+
+## [Hold Time Violations, Sequential Multiplication (Lecture 02-22-2023)](https://video.ucdavis.edu/media/ECS154ALecture02-22-2023/1_y4n44ptd)
+
+#####  Finding Hold Time Violations
+- $T_{hold} <= t_{cd} + t_{ccq}$
+- - $T_{cd}$ is the contamination delay of the combinational circuitry
+- How to calculate
+- - Write $t_{ccq}$ at the output of each flip flop
+  - Find the contamination delay like normal
+  - If the contamination delay going into any of the flip flops is less than the hold time for that flip flop you have a hold time violation
+- If your circuit has a hold time violation you must redesign your combinational logic to have longer minimum path
+  - This can be done by adding buffers along the short path until it is at least as long as the hold time
+
+
+
+###### Example (Contamination Delay)
+
+<img src="afterMTLecture.assets/Screen Shot 2023-03-08 at 6.39.58 PM.png" alt="Screen Shot 2023-03-08 at 6.39.58 PM" style="zoom:50%;" />
+
+`When Hold Time is 8, all of them are hold time violation (5 < 8, 5 < 8, 7 < 8)`
+
+`If hold time is 6, top two would be hold time violation and bottom one would be not.`
+
+
+
+##### Clock Skew
+
+- Up until now we have assumed that the clock arrives at all flip flops at the same time\
+  - This is generally not the case for components that are far apart and especially if the clock is gated at any point
+  - This variation is called clock skew and limits the amount of time we can do useful work
+- $T_c >= t_{pcq} + t_{pd} + t_{setup} + t_{skew}$
+- $T_{hold} <= t_{cd} + t_{ccq} - t_{skew}$
+
+
+
+##### Problem
+
+1. Multiply two 4 bits number together, however you are only given one 8 bit adder.
+
+##### Inputs
+
+1. `A`: 4 bit number
+2. `B`: 4 bit number
+3. `Start`: when 1 means to start the multiplication
+   - The input will only be valid during the first clock cycle that Start is 1.
+
+##### Outputs
+
+1. `Product`: 8 bit result
+2. `Ready`: Circuit is ready to start a new multiplication
+   - The outputs should remain stable until a new multiplication is started.
+
+| A    | 1    | 0    | 1    | 1    |
+| ---- | ---- | ---- | ---- | ---- |
+| B    | 0    | 1    | 0    | 1    |
+
+= 1011+00000+101100+0000000
+
+
+
+###### First Writing the Program in C
+
+```c
+u_int32 multiply(u_int32 A, u_int16 B){
+    u_int32 total = 0;
+    const int num_bits = 16;
+    for(int i = 0; i<num_bits; ++i){ //go through each bit of B
+        if(B & (1 << i)){   //if bit i of B is a 1
+//            total += A << i;
+            total += A;
+        }else{
+            total += 0;
+        }
+        A <<= 1;    // A = A << 1;
+    }
+    return total;
+}
+```
+
+
+
+## [Sequential Multiplication (Lecture 02-24-2023)](https://video.ucdavis.edu/media/ECS154ALecture02-24-2023/1_z59opxyb)
+
+
+
+```mermaid
+stateDiagram-v2
+	Ready/Ready=1 --> Initialize/SaveInputs: Start/StartMultiplication=1
+	Initialize/SaveInputs --> DoMult0: Don't Care
+	DoMult0 --> DoMult1: Don't Care
+	DoMult1 --> DoMult2: Don't Care
+	DoMult2 --> DoMult3: Don't Care
+	DoMult3 --> Ready/Ready=1: Don't Care
+```
+
+`Translate C code to Logism circuits`
+
+<img src="afterMTLecture.assets/Screen Shot 2023-03-10 at 5.15.18 AM.png" alt="Screen Shot 2023-03-10 at 5.15.18 AM" style="zoom:50%;" />
+
+ [MultiExample224.circ](../../../../../../../Logism/MultiExample224.circ) 
+
+
+
+## [Finish Sequential Multiplication, Start CPU Design (Lecture 02-27-2023)](https://video.ucdavis.edu/media/ECS154ALecture02-27-2023/1_iiui8sgy)
+
+<img src="afterMTLecture.assets/Screen Shot 2023-03-10 at 3.25.25 PM.png" alt="Screen Shot 2023-03-10 at 3.25.25 PM" style="zoom:150%;" />
+
+ [multiplicationNextState.xlsx](../../../Winter 2023/ECS 154A/multiplicationNextState.xlsx) 
+
+ [MultiExample224.circ](../../../../../../../Logism/MultiExample224.circ) 
+
+
 
