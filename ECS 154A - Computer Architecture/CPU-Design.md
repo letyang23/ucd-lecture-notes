@@ -530,3 +530,491 @@ Address Size:
 | Read | 99   | No     | HIT (Match at position 0) |
 | Read | 12   | Yes    | entry at position 2 (20)  |
 
+`Update to 3 after 20. When there is a match we don't increment the counter.`
+
+<img src="CPU-Design.assets/Screen Shot 2023-03-18 at 5.40.35 AM.png" alt="Screen Shot 2023-03-18 at 5.40.35 AM" style="zoom:50%;" />
+
+
+
+##### Least Recently Used
+
+- Kick out the way within a set that was accessed farthest in the past
+- To do so you have to keep an Age register **per Way** that keeps track of how long ago that way was accessed
+- When a way within a set is accessed its age is updated using the following algorithm
+  - If age of this way == age of way accessed, new age = 0
+  - If age of this way < age of way accessed, new age = age of this way + 1
+  - If age of this way > age of way accessed, new age = age of this way
+- This is a very expensive eviction policy and so only approximations of it are used in practice. 
+
+###### Example - LRU
+
+| Set             |                           |                    |                      |                           |
+| --------------- | ------------------------- | ------------------ | -------------------- | ------------------------- |
+| Ways            | 0                         | 1                  | 2                    | 3                         |
+| Age (times ago) | 2 (stay same) ->0 -> 0->1 | 3 (stay same) -> 3 | 1 -> 0 -> 1 ->1 -> 0 | ~~1~~ 0 -> 1-> 2 ->2 -> 2 |
+| Tags            | 30                        | 20                 | ~~70~~ 50            | ~~5~~ 99                  |
+
+
+
+|      |      | Evict? | Who Would We Evict?             | Update Age                |
+| ---- | ---- | ------ | ------------------------------- | ------------------------- |
+| Read | 5    | No     |                                 |                           |
+| Read | 70   | No     |                                 |                           |
+| Read | 20   | No     |                                 |                           |
+| Read | 30   | No     |                                 |                           |
+| Read | 99   | Yes    | Evict the oldest (Way 3, Tag 5) | Yes                       |
+| Read | 50   | Yes    | Way 2, Tag 70                   | Yes                       |
+| Read | 99   | No     |                                 | Yes (Cap the other 2 age) |
+| Read | 50   | No     |                                 | Yes                       |
+| Read | 30   | No     |                                 | Yes                       |
+| Read | 30   | No     |                                 | Yes                       |
+| Read | 50   | No     |                                 | Yes                       |
+
+###### Strategy
+
+`If age of this way == age of way accessed, new age = 0`
+
+`If age of this way < age of way accessed, new age = age of this way + 1`
+
+`If age of this way > age of way accessed, new age = age of this way`
+
+
+
+###### Similar strategy example but approximations
+
+| Set      |          |            |           |      |
+| -------- | -------- | ---------- | --------- | ---- |
+| Ways     | 0        | 1          | 2         | 3    |
+| Accessed | 0->1->0  | 0 -> 1 ->0 | 0 -> 1    | 1->0 |
+| Tags     | ~~5~~ 50 | ~~70~~ 90  | ~~20~~ 17 | 30   |
+
+
+
+|      |      | Evict?                                |
+| ---- | ---- | ------------------------------------- |
+| Read | 5    |                                       |
+| Read | 70   |                                       |
+| Read | 20   |                                       |
+| Read | 30   |                                       |
+| Read | 99   | 70(随机选一个0)                       |
+| Read | 50   |                                       |
+| Read | 99   |                                       |
+| Read | 50   |                                       |
+| Read | 17   | 20, every other access bits become 0. |
+
+
+
+##### Random
+
+- Kick something out
+- Simulations have shown that, on average, it works just about as good as LRU
+- Not used in practice though
+
+
+
+## [Caching: Write Policies, Miss Types, Full Cache Example (Lecture 03-13-2023)](https://video.ucdavis.edu/media/ECS154ALecture03-13-2023/1_8ak21sh3)
+
+##### Write Policies
+
+Write Through
+- Everytime you write to the cache you write to memory
+- Adv: Simple, cache and memory are always consistent
+- DisAdv: Writes function at the speed of main memory
+
+Write Back
+- Only write to memory when you evict a block and that block is different from what is in memory
+- Must maintain a bit per way called the dirty bit that tracks whether the way has be written to
+  - 1: Has be written to and therefore is different from what is in memory
+  - 0: Has **not** been written to and is the same as what is in memory
+- Now when we evict a block, if it is dirty, we have to write it back to memory first before we can bring in the block we need
+
+##### Write Back (Continued)
+- Where to write the evicted block back to?
+  - Where we got it from. Address = Stored Tag:Set:0
+  - 0 means set **all** of the block offset bits to 0 as we need to write the block back to the beginning of the block in memory
+- Adv: Writes happen at the speed of the cache
+- Dis Adv: Greater complexity, need to store dirty bit, evictions can take longer when block is dirty
+
+
+
+##### Validity
+- When the cache is first turned on it is filled with garbage. 
+- We need to make sure we don’t accidentally interpret that garbage as actual values and give them to the CPU by accident
+- So in each **way** we store a valid bit. 1 is valid, 0 is invalid
+- The valid bit gets set to 1 when we read in a block from memory into that way
+- So a set only contains what the CPU is looking for if the Tag matches **AND** it is valid
+
+
+
+##### Miss Types
+
+- Compulsory: The first time we access an element in a block we won’t have it
+  - Can be reduced by increasing the block size
+  - This will increase conflict misses though as larger blocks will lead to either fewer sets or decreased the associativity (K)
+- Capacity: We don’t have enough space to fit all of the elements we want to work on
+  - Can be reduced by increasing the size of the cache
+  - Increasing the size of the cache will increase the cache access time though
+- Conflict: Too many of the elements we are working on map to the same set
+  - Can be reduced by increasing the associativity (number of ways per set)
+  - Increasing the associativity will increase the cache access time though
+
+###### Example - Capacity 
+
+`有前面没后面`
+
+| Cache Size 4    | miss | hit  | miss | hit  | miss | hit  | miss | hit  |
+| --------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| Addresses       | 0    | 1    | 2    | 3    | 4    | 5    | 0    | 1    |
+| Block size =  2 |      |      |      |      |      |      |      |      |
+
+###### Example - Conflict
+
+|      | Cache | Tag              |
+| ---- | ----- | ---------------- |
+| 0    |       | 0 -> 4 -> 0 -> 4 |
+| 1    |       |                  |
+| 2    |       |                  |
+| 3    |       |                  |
+
+<img src="CPU-Design.assets/Screen Shot 2023-03-18 at 2.28.43 PM.png" alt="Screen Shot 2023-03-18 at 2.28.43 PM" style="zoom:50%;" />
+
+<img src="CPU-Design.assets/Screen Shot 2023-03-18 at 2.30.50 PM.png" alt="Screen Shot 2023-03-18 at 2.30.50 PM" style="zoom:50%;" />
+
+`after some size of block, the miss rate goes up again`
+
+`when we increase block size, we trying to reduce compulsory misses. However, the conflict misses increased.`
+
+
+
+## [Caching: Finish Cache Example, Cache Steps, Cache Psuedo Program (Discussion 03-13-2023)](https://video.ucdavis.edu/media/ECS154ADiscussion03-13-2023/1_dk8sj7ja)
+
+​	 [CPU-Design_3-6.xlsx](CPU-Design_3-6.xlsx) Sheet 2
+
+##### How to build for Assignment
+
+- Read
+  1. Break the Address down into tag, set and offset
+  
+  2. Check if the address is in the cache
+     1. It will be in the cache if the set we map to contain a way with a matching tag and that way is valid.
+  
+  3. If the address is not in the cache
+     1. Evict the oldest way within that set (make space for the new block that we want).
+        1. If the oldest way is dirty, write it out to memory at address EvictedWay.Tag | Set | 0
+  
+        2. Read the desired block from memory Read.Tag | Set | 0 into the oldest way.
+  
+           `Block addressable only Read.Tag | Set for homework `
+  
+           1. Validty = 1
+           2. Dirty = 0
+           3. Tag = Read.Tag
+  
+  4. Update the ages
+  
+  5. Give the value back to the cpu at the `Set[offset]` of the matching way
+
+- Write Value to Address
+
+  1. Break the Address down into tag, set and offset
+
+  2. Check if the address is in the cache
+
+     1. It will be in the cache if the set we map to contain a way with a matching tag and that way is valid.
+
+  3. If the address is not in the cache
+
+     1. Evict the oldest way within that set (make space for the new block that we want).
+
+        1. If the oldest way is dirty, write it out to memory at address EvictedWay.Tag | Set | 0
+
+        2. Read the desired block from memory Read.Tag | Set | 0 into the oldest way.
+
+           `Block addressable only Read.Tag | Set for homework `
+
+           1. Validty = 1
+           2. Dirty = 0
+           3. Tag = Read.Tag
+
+  4. Update the ages
+
+  5. Set[offset] of the matching way = Value
+
+     1. dirty = 1
+
+###### Psuedocode (cache)
+
+```python
+class Cache:
+    def __init__(self, size: int, block_size: int, associativity: int, address: int, main_memory: "Memory"):
+        ...
+
+    def read(self, address: int) -> int:
+        offset = address & self.num_offset_bits()
+        matching_way = self.matching_way()
+        return matching_way[offset]
+
+    def write(self, value: int, address: int) -> None:
+        offset = address & self.num_offset_bits()
+        matching_way = self.matching_way()
+        matching_way[offset] = value
+```
+
+`one more subcircuit for set and one more subcircuit for way`
+
+
+
+## [Cache Psuedo Program, Implementing Contains (Lecture 03-15-2023)](https://video.ucdavis.edu/media/ECS154ALecture03-15-2023/1_w0baqxnj)
+
+Cache
+
+```python
+import set
+import way
+
+
+class Cache:
+    def __init__(self, size: int, block_size: int, associativity: int, address: int, main_memory: "Memory"):
+        ...
+
+    def read(self, address: int) -> int:
+        matching_way = self.get_matching_way()
+        offset = address & self.num_offset_bits()
+        return matching_way[offset]
+
+    def write(self, value: int, address: int) -> None:
+        matching_way = self.get_matching_way()
+        offset = address & self.num_offset_bits
+        matching_way[offset] = value
+
+    def get_matching_way(self, address: int) -> Way:
+        if not self.contains(address):
+            set_bits = self.get_set_bits(address)
+            self.sets[set_bits].evict_oldest_way()
+            # self.sets[set].load(address >> self.num_offset_bits)
+            self.sets[set_bits].load(self.get_block_address())
+        self.sets[set_bits].update_ages()
+        return self.sets[set_bits].get_matching_way(self.get_tag_bits())
+
+    def contains(self, address: int) -> bool:
+        set_bits = self.get_set_bits(address)
+        tag_bits = self.get_tag_bits(address)
+        return self.sets[set_bits].contains(tag_bits)
+
+```
+
+Set
+
+```python
+class Set:
+    def __init__(self):
+        ...
+
+    def contains(self, tag: int):
+        for way in self.ways:
+            if way.contains(tag):
+                return True
+        return False
+
+    # return any ((way.contains(tag) for way in self.ways))
+
+    def evict_oldest_way(self) -> None:
+        oldest_way = self.get_oldest_way()
+        if oldest_way.is_dirty():
+            self.memory.write_block(oldest_way.get_tag() + self.set_oldest_way.block)
+
+    def load(self, block_address: int) -> None:
+        oldest_way = self.get_oldest_way()
+        oldest_way.load_block_from_memory(block_address)
+
+    def update_ages(self, tag: int) -> None:
+        age_of_way_accessed = self.get_matching_way(tag)
+        for way in self.ways:
+            way.update_age(age_of_way_accessed)
+
+    def get_oldest_way(self) -> Way:
+        for way in self.ways:
+            # if way.age == self.max_age:
+            if way.is_oldest(self.max_age):
+                return way
+        # error but will never reach here
+
+```
+
+Way
+
+```python
+class Way:
+    def __init__(self):
+        ...
+
+    def contains(self, tag: int) -> bool:
+        return self.tag == tag and self.valid
+
+    def is_oldest(self, max_age: int) -> bool:
+        return self.age == max_age
+
+    def update_age(self, age_of_way_accessed: int) -> None:
+        if self.age == age_of_way_accessed:
+            self.age = 0
+        elif self.age < age_of_way_accessed:
+            self.age += 1
+        else:
+            self.age = self.age
+
+```
+
+
+
+## [Caching: Implementing Contains, Virtual Memory (Lecture 03-17-2023)](https://video.ucdavis.edu/media/ECS154ALecture03-17-2023/1_ebj9ih92)
+
+###### Logism Implementation For Cache Project
+
+### Virtual Memory
+
+##### Benefits of Virtual Memory
+- Programmers get to write code like they own all of memory
+- Programmers don’t have to worry about where their program is loaded into memory
+- Programs are protected from each other
+  - One program cannot access the memory belonging to another program without going through the OS
+- Operating System can detect invalid memory accesses
+
+
+
+##### The Core Idea
+- Programs no longer generate physical addresses but instead generate virtual addresses
+- These virtual addresses need to be translated to the physical addresses where the data is actually stored 
+  - This is done by the operating system
+- This translation is done a Virtual Memory Table
+  - There is one VMT per process
+
+
+
+##### How it is implemented
+
+- Mapping individual addresses would be to slow and too costly so instead we map pages
+- Pages are a chunk of sequential addresses/values
+- Physical pages are formed by dividing the physical address space into these chunks
+- Virtual pages are formed by dividing the virtual address space into these chunks
+- There tend to be more virtual pages than physical pages to the OS keeps the most recently accessed virtual pages in main memory. The rest are left on the hard drive until they are needed
+
+
+
+##### The Virtual Memory Table
+
+- The OS maintains a Virtual memory table per process
+- There is one entry per **virtual** page
+- Each entry contains
+  - A resident bit. 1 if the page is in memory and 0 if it is on the disk
+  - Physical page number of the page in memory if it is there
+  - Location on disk if it isn’t in memory
+  - A dirty bit signifying if the page has been written to. 0 clean and 1 if dirty
+  - Access permission bits. Read, write, execute
+    - Performing an operation you don’t have permissions for on a page of memory results in a segfault
+  - Possibly some other information bits
+
+
+
+##### Address partitioning
+
+- \#physical pages = size of memory / page size
+- \#virtual pages = number entries = 2number of virtual address bits / page size
+- Assuming the page size is a power of 2 (which it will be) the virtual address can be partitioned into 2 sections
+
+ |            | Page Number                             | Page Offset     |
+  | ---------- | --------------------------------------- | --------------- |
+  | Field Size | #virtual address bits - log2(page size) | log2(page size) |
+- The page offset tells you how far to look into the page.
+- The page number gives you the entry of the VMT to look at
+
+
+
+##### Virtual to Physical Address Translation
+
+- Partition virtual address into page number and page offset
+- Entry = VMT[Page Number]
+- If entry not in physical memory (resident == 0)
+  - Pick physical page to evict
+  - If evicted page is dirty, write it to hard drive
+  - VMT[EvictedPage].resident = 0
+  - Read desired page from harddrive into memory and update entry to say where you put it in memory
+- Physical Address = Entry.physicalPageNumber : pageOffset
+  - Where : means concatenation
+- The physical address and virtual address have identical page offset bits
+
+
+
+##### It’s just caching
+
+- Virtual memory is mainly just using main memory (RAM) as a cache for the hard drive
+  - Physical Memory == Cache from caching
+  - Hard drive/Virtual Memory == Memory from caching
+- Pages == blocks from caching
+- Translation from a virtual address to a physical address == cache lookup
+- The hard drive is extremely slow to access so we want our miss rate to be as low as possible so we use a fully associative mapping strategy
+- The slowness of the hard drive also leads us to a write back policy
+- The size of the VMT leads us to use Pseudo LRU for the eviction strategy
+
+
+
+##### These virtual memory tables can get huge!
+- Assume memory = 2MB = $2 * 2^{20}$ bytes
+- Assume virtual memory address size = 32 bits
+  - Assume page size = 4KB = 4 * 2^10^ bytes
+- \#physical pages = 2MB / 4KB = 2^21^ / 2^12^ = 2^9^ 
+- \#virtual pages = 2^32^ / 2^12^ = 2^20^
+- \#entries = 2^20^
+- \#page offset bits = log2(4KB) = 12
+- \#page bits = 32 - 12 = 20
+- Each entry is at least 9 bits big. For the low end assume 2 bytes per entry for additional overhead bits
+- VMT = 2 bytes/entry * 2^20^ entries = 2MB. That’s the size of memory!
+  - And this is **PER PROCESS**
+
+
+
+##### Multilevel page tables
+
+- To resolve the issue of overly large page tables we can split our page table into a primary page table,which we always have to keep in memory, and multiple secondary page tables that we can move in and out of memory as needed
+- The primary page table will allow up to map addresses to secondary page tables and the secondary page table will map us to the correct physical page
+- We will choose the size of a secondary page table to be the size of a page as those are the units we naturally move in and out
+
+
+
+##### Multilevel Address Partitioning
+
+- \#entries in the primary page table = #secondary page tables
+- \#secondary page tables = number of entries per primary page table = #virtual pages / number of entries per secondary page table
+- Number of entries per secondary page table = page size / size of an entry
+- Address can be partitioned as 
+
+ |            | Page Number                     | Secondary Page Offset                            | Page Offset     |
+  | ---------- | ------------------------------- | ------------------------------------------------ | --------------- |
+  | Field Size | log2(number of secondary pages) | log2(number of entries per secondary page table) | log2(page size) |
+
+
+
+##### Multilevel page table Address translation
+
+- Partition address into page number, secondary page offset, page offset
+- Primary Entry = Primary Page Table[page number]
+- Secondary Page table = Primary Entry.physical page number
+- Secondary Entry = Secondary Page table[secondary page offset]
+- Physical Address = Secondary Entry.physical page number : page offset
+- The above assumes the secondary page table and the physical page that contained the value are both in memory
+  - If either one was not we would have to kick out something to bring in the one that we wanted
+
+
+
+##### Shrinking memory requirements
+
+- Assume memory = 2MB = 2 * 2^20^ bytes
+- Assume virtual memory address size = 32 bits
+- Assume page size = 4KB = 4 * 2^10^ bytes
+- \#physical pages = 2MB / 4KB = 2^21^ / 2^12^ = 2^9^ pages
+- \#page offset bits = log2(4KB) = 12
+- Each entry is at least 9 bits big. For the low end assume 2 bytes per entry for additional overhead bits
+- \#virtual pages = 2^32^ / 2^12^ = 2^20^
+- \#entries per secondary page table = 4KB / 2 bytes = 2KB = 2^11^
+- \#secondary page tables = 2^20^ / 2^11^ = 2^9^
+- Primary page table size = 2 * 2^9^ = 2^10^ bytes
+- With only a single level page table it was 2MB and now it is only 1KB!
