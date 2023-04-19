@@ -1118,3 +1118,7 @@ stateDiagram-v2
 
 
 
+```mermaid
+stateDiagram-v2
+	Way3isLRU --> Way: Start/StartMultiplication=1
+	Initialize/SaveInputs --> DoMult0: Don't Care

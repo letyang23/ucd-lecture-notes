@@ -165,3 +165,10 @@ A file named Cache.circ with your solution in the implementation subcircuit
   - Used the wrong Tag bits to when addressing memory on writes.
 
   - - Fix. When writing to memory you should use the Tag bits found in the Line that you will be writing. When reading from memory you should use the Tag bits from the CpuAddress.
+
+
+
+```mermaid
+statediagram
+```
+

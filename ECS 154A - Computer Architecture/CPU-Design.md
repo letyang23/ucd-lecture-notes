@@ -1,4 +1,4 @@
-## [Start CPU Design (Lecture 02-27-2023)](https://video.ucdavis.edu/media/ECS154ALecture02-27-2023/1_iiui8sgy)
+## [ Start CPU Design (Lecture 02-27-2023)](https://video.ucdavis.edu/media/ECS154ALecture02-27-2023/1_iiui8sgy)
 
 ### CPU Design
 
