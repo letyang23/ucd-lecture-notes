@@ -1,3 +1,5 @@
+[toc]
+
 #  4/14 Lecture
 
 ### Recap
@@ -18,7 +20,7 @@ $ du -sh * | sort -h -r | head -3
 ...
 ```
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-14 at 2.12.33 PM.png" alt="Screen Shot 2023-04-14 at 2.12.33 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-14 at 2.12.33 PM.png" alt="Screen Shot 2023-04-14 at 2.12.33 PM" style="zoom:50%;" />
 
 ### Signals
 
@@ -47,8 +49,11 @@ In case process does not define specific signal handling
   `We could set to ignore SIGINT`
 
 - Ignore signals
+
   - Mask of blocked signals
+
 - Set signal handlers
+
   - Function to be run upon signal delivery
 
 ##### Main related functions/syscalls
@@ -209,7 +214,7 @@ int main(void)
 
 ### OS Layers: overview
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-14 at 2.46.26 PM.png" alt="Screen Shot 2023-04-14 at 2.46.26 PM" style="zoom:30%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-14 at 2.46.26 PM.png" alt="Screen Shot 2023-04-14 at 2.46.26 PM" style="zoom:30%;" />
 
 ##### Applications
 
@@ -233,7 +238,7 @@ int main(void)
 
 ##### Application compilation
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-14 at 2.52.32 PM.png" alt="Screen Shot 2023-04-14 at 2.52.32 PM" style="zoom:40%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-14 at 2.52.32 PM.png" alt="Screen Shot 2023-04-14 at 2.52.32 PM" style="zoom:40%;" />
 
 ```mermaid
 flowchart LR
@@ -255,39 +260,6 @@ GCC can pre-process, compile, assemble and link together
 $ % gcc hello.c -o hello -save-temps
 $ % ll
 ```
-
-
-
-### Project 1
-
-- Overview:
-  - Autograding is 60%
-  - capture **correctness**
-
-- Complete grading test scripts has >25 test cases, and 8 of them will be published.
-- All the test cases can be reproduced manually.
-- Run it first before continue. Re-read the assignment prompt. Error handling is important.
-
-
-
-Manual Review
-
-- 40%
-
-- quality of project
-
-- Various aspects related to real-life programming projects
-
-  - Project well-packaged
-
-  - Code properly designed and implemented
-
-  - Code well-explained
-
-  - ```c
-    fprintf(stderr, " Error: command not found");
-    //Use enum
-    ```
 
 
 
@@ -319,7 +291,7 @@ Manual Review
 
 ##### Application loading 101
 
-<img src="Midterm2_Lecture.assets/image-20230423220701569.png" alt="image-20230423220701569" style="zoom:70%;" />
+<img src="Midterm 2 Review.assets/image-20230423220701569.png" alt="image-20230423220701569" style="zoom:70%;" />
 
 ###### Directly from executable
 
@@ -359,7 +331,7 @@ $ ldd a.out
 		/lib64/ld-linux-x86-64.so.2 (0x00007fab53bc9000)
 ```
 
-<img src="Midterm2_Lecture.assets/image-20230423220822138.png" alt="image-20230423220822138" style="zoom:70%;" />
+<img src="Midterm 2 Review.assets/image-20230423220822138.png" alt="image-20230423220822138" style="zoom:70%;" />
 
 ##### Static and dynamic libraries
 
@@ -451,7 +423,7 @@ $ ./a.out
 
 #### OS Layers: details
 
-![image-20230423221424904](Midterm2_Lecture.assets/image-20230423221424904.png)
+![image-20230423221424904](Midterm 2 Review.assets/image-20230423221424904.png)
 
 `Android/Desktop Linux are both Linux. The protable OS layer is same.`
 
@@ -483,7 +455,7 @@ $ ./a.out
 
 #### OS Interfaces
 
-![image-20230423221457226](Midterm2_Lecture.assets/image-20230423221457226.png)
+![image-20230423221457226](Midterm 2 Review.assets/image-20230423221457226.png)
 
 - **API** (Application Programming Interface): interface between pieces of code
 - **UAPI** (User API): syscall interface between apps and kernel
@@ -499,7 +471,7 @@ $ ./a.out
 
 ##### Monolithic kernel
 
-<img src="Midterm2_Lecture.assets/image-20230423221658221.png" alt="image-20230423221658221" style="zoom:80%;" />
+<img src="Midterm 2 Review.assets/image-20230423221658221.png" alt="image-20230423221658221" style="zoom:80%;" />
 
 ###### Concept
 
@@ -526,7 +498,7 @@ $ ./a.out
 
 ##### Microkernel
 
-<img src="Midterm2_Lecture.assets/image-20230423221759975.png" alt="image-20230423221759975" style="zoom:80%;" />
+<img src="Midterm 2 Review.assets/image-20230423221759975.png" alt="image-20230423221759975" style="zoom:80%;" />
 
 `The kernel executeable will only contain the minimum necessary`
 
@@ -556,7 +528,7 @@ $ ./a.out
 
 ##### Hybrid kernel
 
-<img src="Midterm2_Lecture.assets/image-20230423221916161.png" alt="image-20230423221916161" style="zoom:80%;" />
+<img src="Midterm 2 Review.assets/image-20230423221916161.png" alt="image-20230423221916161" style="zoom:80%;" />
 
 `Combine the advantage for previous kernel structures`
 
@@ -584,7 +556,7 @@ $ ./a.out
 
 ###### Simplified internal structure
 
-<img src="Midterm2_Lecture.assets/image-20230423221943786.png" alt="image-20230423221943786" style="zoom:90%;" />
+<img src="Midterm 2 Review.assets/image-20230423221943786.png" alt="image-20230423221943786" style="zoom:90%;" />
 
 
 
@@ -598,8 +570,8 @@ $ ./a.out
 
 - A process is a program in execution
 
-  <img src="Midterm2_Lecture.assets/Screen Shot 2023-04-19 at 2.13.02 PM.png" alt="Screen Shot 2023-04-19 at 2.13.02 PM" style="zoom:40%;" />
-  
+  <img src="Midterm 2 Review.assets/Screen Shot 2023-04-19 at 2.13.02 PM.png" alt="Screen Shot 2023-04-19 at 2.13.02 PM" style="zoom:40%;" />
+
   `Program is not 1:1 relationship to Process`
 
 ##### Lack of protection
@@ -619,7 +591,7 @@ $ ./a.out
 - Redefine process abstraction
 - Include notion of protection
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-19 at 2.16.42 PM.png" alt="Screen Shot 2023-04-19 at 2.16.42 PM" style="zoom:40%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-19 at 2.16.42 PM.png" alt="Screen Shot 2023-04-19 at 2.16.42 PM" style="zoom:40%;" />
 
 ##### Process RE-definition
 
@@ -632,7 +604,7 @@ $ ./a.out
   - E.g., what files it can access
   - Based on process' user ID, group ID
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-19 at 2.17.53 PM.png" alt="Screen Shot 2023-04-19 at 2.17.53 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-19 at 2.17.53 PM.png" alt="Screen Shot 2023-04-19 at 2.17.53 PM" style="zoom:50%;" />
 
 ###### But efficient
 
@@ -653,7 +625,7 @@ $ ./a.out
 
 `I drive the car to take my friend around `
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-19 at 2.21.37 PM.png" alt="Screen Shot 2023-04-19 at 2.21.37 PM" style="zoom:40%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-19 at 2.21.37 PM.png" alt="Screen Shot 2023-04-19 at 2.21.37 PM" style="zoom:40%;" />
 
 ###### Native execution
 
@@ -661,7 +633,7 @@ $ ./a.out
   - Very fast execution
 - But safe execution needs specific hardware support...
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-19 at 2.22.43 PM.png" alt="Screen Shot 2023-04-19 at 2.22.43 PM" style="zoom:40%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-19 at 2.22.43 PM.png" alt="Screen Shot 2023-04-19 at 2.22.43 PM" style="zoom:40%;" />
 
 `Your friend might crash your car.`
 
@@ -689,20 +661,28 @@ $ ./a.out
 - Limited privileges on the hardware
   - As granted by the operating system
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-19 at 2.25.02 PM.png" alt="Screen Shot 2023-04-19 at 2.25.02 PM" style="zoom:40%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-19 at 2.25.02 PM.png" alt="Screen Shot 2023-04-19 at 2.25.02 PM" style="zoom:40%;" />
 
 ##### Hardware support
+
 ###### Privileged instructions
+
 - Potentially unsafe instructions prohibited when in user mode
 - Only available in kernel mode
   `example: shut-down instruction. WFI(wait for interrupt) on RISC-V.`
+
 ###### Memory protection
+
 - Memory accesses outside of process' memory limits prohibited
 - Prevent process from overwriting kernel's or other processes' memory
+
 ###### Timer interrupts
+
 - Kernel periodically regains control on CPU
 - Prevent running process from hogging hardware
+
 ###### Mode switch
+
 - Safe and efficient way to switch mode
 - From user mode to kernel mode, and vice-versa
 
@@ -710,7 +690,7 @@ $ ./a.out
 
 ##### Typical 5-stage pipeline (Not on Exam)
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-19 at 2.38.30 PM.png" alt="Screen Shot 2023-04-19 at 2.38.30 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-19 at 2.38.30 PM.png" alt="Screen Shot 2023-04-19 at 2.38.30 PM" style="zoom:50%;" />
 
 `add $4, $5, $6`
 
@@ -718,7 +698,7 @@ $ ./a.out
 
 ##### "Dual-mode" 5-stage pipeline
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-19 at 2.39.39 PM.png" alt="Screen Shot 2023-04-19 at 2.39.39 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-19 at 2.39.39 PM.png" alt="Screen Shot 2023-04-19 at 2.39.39 PM" style="zoom:50%;" />
 
 ##### Privileged instructions
 
@@ -776,13 +756,13 @@ Segmentation fault (core dumped)
 
 - Memory area defined by base and bound pair
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-19 at 2.49.07 PM.png" alt="Screen Shot 2023-04-19 at 2.49.07 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-19 at 2.49.07 PM.png" alt="Screen Shot 2023-04-19 at 2.49.07 PM" style="zoom:50%;" />
 
 ###### Virtual memory
 
 - Runtime translation between virtual and physical address spaces
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-19 at 2.49.37 PM.png" alt="Screen Shot 2023-04-19 at 2.49.37 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-19 at 2.49.37 PM.png" alt="Screen Shot 2023-04-19 at 2.49.37 PM" style="zoom:50%;" />
 
 ##### Timer interrupts
 
@@ -813,7 +793,7 @@ Segmentation fault (core dumped)
   - Returns control to the kernel exception handler
 - Also typically used to maintain accurate and precise time of day
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-19 at 2.57.11 PM.png" alt="Screen Shot 2023-04-19 at 2.57.11 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-19 at 2.57.11 PM.png" alt="Screen Shot 2023-04-19 at 2.57.11 PM" style="zoom:50%;" />
 
 ```bash
 sshell$ ls file_that_doesnt_exists >& output
@@ -837,17 +817,17 @@ sshell$
 
 ##### Protected execution
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 4.59.27 PM.png" alt="Screen Shot 2023-05-06 at 4.59.27 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 4.59.27 PM.png" alt="Screen Shot 2023-05-06 at 4.59.27 PM" style="zoom:50%;" />
 
 ##### Native execution
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 4.59.44 PM.png" alt="Screen Shot 2023-05-06 at 4.59.44 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 4.59.44 PM.png" alt="Screen Shot 2023-05-06 at 4.59.44 PM" style="zoom:50%;" />
 
 #### Dual-mode operation
 
 ##### User mode vs kernel mode
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 5.00.02 PM.png" alt="Screen Shot 2023-05-06 at 5.00.02 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 5.00.02 PM.png" alt="Screen Shot 2023-05-06 at 5.00.02 PM" style="zoom:50%;" />
 
 ##### Hardware support
 
@@ -884,7 +864,7 @@ int *a = NULL;
 - (Better) alternative to *polling* `Polling: keep asking are you done?`
 - Asynchronous events
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 5.02.04 PM.png" alt="Screen Shot 2023-05-06 at 5.02.04 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 5.02.04 PM.png" alt="Screen Shot 2023-05-06 at 5.02.04 PM" style="zoom:50%;" />
 
 ##### System calls
 
@@ -908,26 +888,26 @@ read:
 
 - Resume suspended execution of same process
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 5.03.14 PM.png" alt="Screen Shot 2023-05-06 at 5.03.14 PM" style="zoom:33%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 5.03.14 PM.png" alt="Screen Shot 2023-05-06 at 5.03.14 PM" style="zoom:33%;" />
 
 ##### Process context switch
 
 - Resume some other process
 
-  <img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 5.03.31 PM.png" alt="Screen Shot 2023-05-06 at 5.03.31 PM" style="zoom:33%;" />
+  <img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 5.03.31 PM.png" alt="Screen Shot 2023-05-06 at 5.03.31 PM" style="zoom:33%;" />
 
 ##### New process start
 
 - Jump to first instruction of program
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 5.03.59 PM.png" alt="Screen Shot 2023-05-06 at 5.03.59 PM" style="zoom:33%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 5.03.59 PM.png" alt="Screen Shot 2023-05-06 at 5.03.59 PM" style="zoom:33%;" />
 
 ##### Signal
 
 - Asynchronous notification
 - If signal handler defined
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 5.04.23 PM.png" alt="Screen Shot 2023-05-06 at 5.04.23 PM" style="zoom:33%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 5.04.23 PM.png" alt="Screen Shot 2023-05-06 at 5.04.23 PM" style="zoom:33%;" />
 
 
 
@@ -968,7 +948,7 @@ read:
 - Change memory protection
 - Disable interrupts
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 5.06.20 PM.png" alt="Screen Shot 2023-05-06 at 5.06.20 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 5.06.20 PM.png" alt="Screen Shot 2023-05-06 at 5.06.20 PM" style="zoom:50%;" />
 
 ##### Kernel to user switch `Steps (like reverse)`
 
@@ -977,7 +957,7 @@ read:
 - Change memory protection
 - Restore interrupts
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 5.06.31 PM.png" alt="Screen Shot 2023-05-06 at 5.06.31 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 5.06.31 PM.png" alt="Screen Shot 2023-05-06 at 5.06.31 PM" style="zoom:50%;" />
 
 
 
@@ -1021,7 +1001,7 @@ exception_entry: # Kernel entry point
 - CPU aware of vector
 - Automatic hardware dispatch
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 5.08.09 PM.png" alt="Screen Shot 2023-05-06 at 5.08.09 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 5.08.09 PM.png" alt="Screen Shot 2023-05-06 at 5.08.09 PM" style="zoom:50%;" />
 
 
 
@@ -1073,13 +1053,13 @@ handle_int:
 - Kernel has its own stack, located in kernel memory
 - Different from process' stack
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 5.10.06 PM.png" alt="Screen Shot 2023-05-06 at 5.10.06 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 5.10.06 PM.png" alt="Screen Shot 2023-05-06 at 5.10.06 PM" style="zoom:50%;" />
 
 #### Context saving
 
 - Kernel stack is used to save associated process context
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 5.10.36 PM.png" alt="Screen Shot 2023-05-06 at 5.10.36 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 5.10.36 PM.png" alt="Screen Shot 2023-05-06 at 5.10.36 PM" style="zoom:50%;" />
 
 - Not a good idea to reuse process's stack pointer
   - Reliability: no guarantee user stack is valid
@@ -1091,220 +1071,7 @@ handle_int:
 
 - Kernel saves its own state when switching between two processes
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 5.11.18 PM.png" alt="Screen Shot 2023-05-06 at 5.11.18 PM" style="zoom:50%;" />
-
-# 4/21 Discussion
-
-### printf() explained
-
-Example 1
-
-```c
-Printf("Hello world! \n");
-```
-
-```bash
-$./a.out
-Hello World!
-```
-
-Example 2
-
-```c
-printf("%s from %c to Z, in %d minutes!\n", "printf", 'A', 45); 
-```
-
-```bash
-$ ./a.out
-printf from A to Z, in 45 minutes!
-```
-
-Example 3
-
-```c
-int i;
-printf("\b%n", &i); // %n count the previous char.
-//i would be set to 1
-```
-
-```c
-printf("%s\bD is \033[1;31m#%d\033[0m!\n", "UCB", i); 
-```
-
-```bash
-$ ./a.out
-UCD is #1!
-```
-
-
-
-#### printf(): an odyssey
-
-##### Fortran I
-
-Special statement for building formatting descriptions:
-
-```
-WRITE OUTPUT TAPE 6, 601, IA, IB, IC, AREA
-601 FORMAT (4H A= ,I5,5H  B= ,I5,5H C= ,I5,8H AREA= ,F10.2,
-		+ 			13H SQUARE UNITS)
-```
-
-- (Approximate) translation in C:
-
-  ```c
-  printf(" A= %5d B= %5d C= %5d AREA= %10.2f SQUARE UNITS", a, b, c, area);
-  ```
-
-##### BCPL
-
-Printing and formatting are merged into a single statement:
-
-```
-WRITEF("%I2-QUEENS PROBLEM HAS %I5 SOLUTIONS*N", NUMQUEENS, COUNT)
-```
-
-- (Approximate) translation in C:
-
-  ```c
-  printf("%2d-queens problem has %5d solutions\n", numqueens, count);
-  ```
-
-##### C
-
-```c
-printf("Hello %s, you are %d years old\n", name, age);
-```
-
-#### Tricle-down string formatting
-
-##### Unix `printf`
-
-```bash
-$ printf "%s, stop lying; you're not %d\!\n" Bob 21
-Bob, stop lying; you're not 21!
-```
-
-
-
-### Why printf()?
-
-- Communicate with user
-
-- Communication between process.
-
-- Introspection
-
-  - See what's happening in the computer.
-
-  
-
-### Tell me where you printf()!
-
-- printf() line in code -> transfer in complex kernel code -> print on terminal
-
-Embedded systems or when display is not available
-
-- printf() to TX on the Hardware.
-
-
-
-### How to print
-
-##### `putchar()`: the coerner stone
-
-```c
-/*
-* Code for IBM-PC x86: write character to COM1 serial port
-*/
-void putchar(char ch)
-{
-    /* Wait until the Transmitter Holding Register (THR) is empty. */
-    while ((inb(COM1_PORT+COM_LSR) & LSR_THRE) == 0);
-  
-    /* Then output the character to the THR */
-    outb(ch, COM1_PORT+COM_THR);
-}
-```
-
-##### No formatting is simply `puts()`
-
-```c
-void my_printf(char *fmt)
-{
-    while (*fmt)
-    putchar(*fmt++);
-}
-int main(void)
-{
-    /* printf 101 */
-    my_printf("Hello world!\n");
-}
-```
-
-```bash
-$ ./a.out
-Hello World!
-```
-
-##### With formatting...
-
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 6.54.20 PM.png" alt="Screen Shot 2023-05-06 at 6.54.20 PM" style="zoom:50%;" />
-
-- For each placeholder, need to retrieve next parameter
-- Depending on placeholder:
-  - '%s': get string
-  - '%c': get character
-  - '%d': convert integer into characters
-
-
-
-### Variadic functions
-
-##### Example: function prototype
-
-```c
-#include <stdarg.h> /* Macro/function definitions for variadic functions */
-#include <stdio.h>
-
-/*
-* Sum a variable number of integers
-* @count: the number of integer parameters
-*
-* Receive @count integers, sum them up and return the result
-*/
-int sum_ints(int count, ...)
-{
-    va_list ap;
-    int i, sum = 0;
-  
-    va_start(ap, count); /* Init variable parameter list */
-  
-    for (i = 0; i < count; i++) {
-        int n = va_arg(ap, int); /* Get next integer parameter */
-        sum += n;
-    }
-  
-    va_end(ap); /* Clean up parameter list */
-  
-    return sum;
-}
-
-int main(void)
-{
-    int res;
-  
-    /* sum up 3 integers: 10, 20 and 30 */
-    printf("Sum is %d\n", sum_ints(3, 10, 20, 30));
-  
-    /* sum up 5 integers: 10, 20, 30, 40, 50 */
-    printf("Sum is %d\n", sum_ints(5, 10, 20, 30, 40, 50));
-  
-    return 0;
-}
-```
-
-
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 5.11.18 PM.png" alt="Screen Shot 2023-05-06 at 5.11.18 PM" style="zoom:50%;" />
 
 # 4/24 Lecture
 
@@ -1312,7 +1079,7 @@ int main(void)
 
 #### Process
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-24 at 2.16.50 PM.png" alt="Screen Shot 2023-04-24 at 2.16.50 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-24 at 2.16.50 PM.png" alt="Screen Shot 2023-04-24 at 2.16.50 PM" style="zoom:50%;" />
 
 ##### Definition (recap)
 
@@ -1383,7 +1150,7 @@ k=8, &k=0x7ffc70ffaaf0
 
 ##### Environment
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-24 at 2.24.53 PM.png" alt="Screen Shot 2023-04-24 at 2.24.53 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-24 at 2.24.53 PM.png" alt="Screen Shot 2023-04-24 at 2.24.53 PM" style="zoom:50%;" />
 
 - Defined in PCB
 - Determines all the specific characteristics of a process
@@ -1427,7 +1194,7 @@ int main(void)
 }
 ```
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-24 at 2.26.00 PM.png" alt="Screen Shot 2023-04-24 at 2.26.00 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-24 at 2.26.00 PM.png" alt="Screen Shot 2023-04-24 at 2.26.00 PM" style="zoom:50%;" />
 
 `Timer interrupt?`
 
@@ -1441,7 +1208,7 @@ int main(void)
 - Scheduler in charge of determining which process should run
   - Ready queue contains all processes ready to run
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-24 at 2.33.59 PM.png" alt="Screen Shot 2023-04-24 at 2.33.59 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-24 at 2.33.59 PM.png" alt="Screen Shot 2023-04-24 at 2.33.59 PM" style="zoom:50%;" />
 
 
 
@@ -1522,7 +1289,7 @@ int main(void)
 
 ##### Process lifecycle
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-24 at 2.48.14 PM.png" alt="Screen Shot 2023-04-24 at 2.48.14 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-24 at 2.48.14 PM.png" alt="Screen Shot 2023-04-24 at 2.48.14 PM" style="zoom:50%;" />
 
 ###### Process states
 
@@ -1575,7 +1342,7 @@ for (i = 0; i < sizeof(buf); i++) {
 
 ##### Process Lifecycle
 
- <img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.12.54 PM.png" alt="Screen Shot 2023-04-26 at 2.12.54 PM" style="zoom:50%;" />
+ <img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.12.54 PM.png" alt="Screen Shot 2023-04-26 at 2.12.54 PM" style="zoom:50%;" />
 
 
 
@@ -1585,7 +1352,7 @@ for (i = 0; i < sizeof(buf); i++) {
 
 ##### Vocabulary
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.16.44 PM.png" alt="Screen Shot 2023-04-26 at 2.16.44 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.16.44 PM.png" alt="Screen Shot 2023-04-26 at 2.16.44 PM" style="zoom:50%;" />
 
 - **Submission time**: time at which a process is created
 - **Turnaround time**: total time between process submission and completion
@@ -1607,7 +1374,7 @@ for (i = 0; i < sizeof(buf); i++) {
 | B    | 0          | 10     |
 | C    | 0          | 10     |
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.22.03 PM.png" alt="Screen Shot 2023-04-26 at 2.22.03 PM" style="zoom:33%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.22.03 PM.png" alt="Screen Shot 2023-04-26 at 2.22.03 PM" style="zoom:33%;" />
 
 - Avg turnaround time: (10+20+30)/3 = 20
 
@@ -1619,7 +1386,7 @@ for (i = 0; i < sizeof(buf); i++) {
 | B    | 0          | 10     |
 | C    | 0          | 10     |
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.23.12 PM.png" alt="Screen Shot 2023-04-26 at 2.23.12 PM" style="zoom:33%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.23.12 PM.png" alt="Screen Shot 2023-04-26 at 2.23.12 PM" style="zoom:33%;" />
 
 - Avg turnaround time: (100+110+120) / 3 = 110
 - Problem known as *convoy effect*
@@ -1640,7 +1407,7 @@ for (i = 0; i < sizeof(buf); i++) {
 | B    | 0          | 10     |
 | C    | 0          | 10     |
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.24.50 PM.png" alt="Screen Shot 2023-04-26 at 2.24.50 PM" style="zoom:33%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.24.50 PM.png" alt="Screen Shot 2023-04-26 at 2.24.50 PM" style="zoom:33%;" />
 
 - Avg turnaround time: (10+20+120) / 3 = 50
 
@@ -1652,7 +1419,7 @@ for (i = 0; i < sizeof(buf); i++) {
 | B    | 10         | 10     |
 | C    | 10         | 10     |
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.25.54 PM.png" alt="Screen Shot 2023-04-26 at 2.25.54 PM" style="zoom:33%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.25.54 PM.png" alt="Screen Shot 2023-04-26 at 2.25.54 PM" style="zoom:33%;" />
 
 `A shows up before B and C.`
 
@@ -1684,7 +1451,7 @@ for (i = 0; i < sizeof(buf); i++) {
 | B    | Every 20   | 10     |
 | C    | Every 20   | 10     |
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.30.57 PM.png" alt="Screen Shot 2023-04-26 at 2.30.57 PM" style="zoom:33%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.30.57 PM.png" alt="Screen Shot 2023-04-26 at 2.30.57 PM" style="zoom:33%;" />
 
 `When there are hundreds of shampoo buyer after A`
 
@@ -1710,7 +1477,7 @@ for (i = 0; i < sizeof(buf); i++) {
 | B    | 0          | 10     |
 | C    | 0          | 10     |
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.33.58 PM.png" alt="Screen Shot 2023-04-26 at 2.33.58 PM" style="zoom:33%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.33.58 PM.png" alt="Screen Shot 2023-04-26 at 2.33.58 PM" style="zoom:33%;" />
 
 - Avg turnaround time: (10+20+30) / 3 = 20
 - Avg response time: (0 + 10 + 20) / 3 = 10
@@ -1728,7 +1495,7 @@ for (i = 0; i < sizeof(buf); i++) {
 | B    | 0          | 10     |
 | C    | 0          | 10     |
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.36.20 PM.png" alt="Screen Shot 2023-04-26 at 2.36.20 PM" style="zoom:33%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.36.20 PM.png" alt="Screen Shot 2023-04-26 at 2.36.20 PM" style="zoom:33%;" />
 
 - Avg turnaround time: (25+27.5+30) / 3 = 27.5
 - Avg response time: (0 + 2.5 + 5 ) / 3 = 2.5
@@ -1751,7 +1518,7 @@ for (i = 0; i < sizeof(buf); i++) {
 - Schedule each categorize differently
   - E.g., optimize for response time or turnaround time
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.41.51 PM.png" alt="Screen Shot 2023-04-26 at 2.41.51 PM" style="zoom:38%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.41.51 PM.png" alt="Screen Shot 2023-04-26 at 2.41.51 PM" style="zoom:38%;" />
 
 
 
@@ -1772,7 +1539,7 @@ for (i = 0; i < sizeof(buf); i++) {
   - CPU-bound processes move to lower priorities
   - I/O-bound processes stay at or move up to higher priorities
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.45.25 PM.png" alt="Screen Shot 2023-04-26 at 2.45.25 PM" style="zoom:38%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.45.25 PM.png" alt="Screen Shot 2023-04-26 at 2.45.25 PM" style="zoom:38%;" />
 
 `Can move up or move down`
 
@@ -1793,7 +1560,7 @@ for (i = 0; i < sizeof(buf); i++) {
 
 ##### Definition
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.52.22 PM.png" alt="Screen Shot 2023-04-26 at 2.52.22 PM" style="zoom:33%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.52.22 PM.png" alt="Screen Shot 2023-04-26 at 2.52.22 PM" style="zoom:33%;" />
 
 - Concurrency is the composition of independently executing tasks
   - Tasks can start, run, complete in overlapping time periods
@@ -1805,7 +1572,7 @@ for (i = 0; i < sizeof(buf); i++) {
 - Make each simple one a process
 - Resulting processes run *concurrently*
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.54.14 PM.png" alt="Screen Shot 2023-04-26 at 2.54.14 PM" style="zoom:33%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.54.14 PM.png" alt="Screen Shot 2023-04-26 at 2.54.14 PM" style="zoom:33%;" />
 
 ###### Example
 
@@ -1817,20 +1584,20 @@ for (i = 0; i < sizeof(buf); i++) {
 
 ##### Types of concurrency
 
- <img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.56.42 PM.png" alt="Screen Shot 2023-04-26 at 2.56.42 PM" style="zoom:50%;" />
+ <img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.56.42 PM.png" alt="Screen Shot 2023-04-26 at 2.56.42 PM" style="zoom:50%;" />
 
 - Example of sequential execution
   - CPU and I/O bursts
 
 ###### CPU virtualization
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.58.04 PM.png" alt="Screen Shot 2023-04-26 at 2.58.04 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.58.04 PM.png" alt="Screen Shot 2023-04-26 at 2.58.04 PM" style="zoom:50%;" />
 
 - Processes interleaved on same CPU
 
 ###### I/O concurrency
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.58.29 PM.png" alt="Screen Shot 2023-04-26 at 2.58.29 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.58.29 PM.png" alt="Screen Shot 2023-04-26 at 2.58.29 PM" style="zoom:50%;" />
 
 - I/O bursts overlapped with CPU bursts
 - Each task runs almost as fast as if it had its own computer
@@ -1838,7 +1605,7 @@ for (i = 0; i < sizeof(buf); i++) {
 
 ###### CPU *parallelism* (Not same as concurrency)
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-26 at 2.59.33 PM.png" alt="Screen Shot 2023-04-26 at 2.59.33 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-26 at 2.59.33 PM.png" alt="Screen Shot 2023-04-26 at 2.59.33 PM" style="zoom:50%;" />
 
 - Requires multiple CPUs `Only in more than 1 CPU`
 - Processes running simultaneously
@@ -1871,7 +1638,7 @@ for (i = 0; i < sizeof(buf); i++) {
 - Quite rarely *superlinear*!
   - Caching effect, different algorithms
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-28 at 2.16.33 PM.png" alt="Screen Shot 2023-04-28 at 2.16.33 PM" style="zoom:33%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-28 at 2.16.33 PM.png" alt="Screen Shot 2023-04-28 at 2.16.33 PM" style="zoom:33%;" />
 
 `CPU越多，单个效率越低`
 
@@ -1892,7 +1659,7 @@ for (i = 0; i < sizeof(buf); i++) {
 - Eliminate duplication of the address space and most of the environment
 - Place concurrent computations within the same address space
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-28 at 2.22.52 PM.png" alt="Screen Shot 2023-04-28 at 2.22.52 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-28 at 2.22.52 PM.png" alt="Screen Shot 2023-04-28 at 2.22.52 PM" style="zoom:50%;" />
 
 
 
@@ -1908,7 +1675,7 @@ for (i = 0; i < sizeof(buf); i++) {
 
 ###### Example (assuming kernel-level threads)
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-28 at 2.26.18 PM.png" alt="Screen Shot 2023-04-28 at 2.26.18 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-28 at 2.26.18 PM.png" alt="Screen Shot 2023-04-28 at 2.26.18 PM" style="zoom:50%;" />
 
 ```c
 int main(void) {
@@ -1933,15 +1700,22 @@ void threadB(void) {
 #### Rationale
 
 ##### Problem structure
+
 - We think linearly
 - But the world is concurrent
+
 ##### Responsiveness
+
 - One thread to maintain quick response with user
 - Other thread(s) to execute longer tasks in the background, or block on I/O
+
 ##### Faster execution
+
 - Threads scheduled across different processors in a multi-processor system
 - Achieve true parallelism
+
 ##### Sharing and communication
+
 - No need for heavy IPCs
 - Use of shared memory
 
@@ -1960,7 +1734,7 @@ while (1) {
 }
 ```
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-28 at 2.33.31 PM.png" alt="Screen Shot 2023-04-28 at 2.33.31 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-28 at 2.33.31 PM.png" alt="Screen Shot 2023-04-28 at 2.33.31 PM" style="zoom:50%;" />
 
 ##### Multithreaded process
 
@@ -1979,7 +1753,7 @@ int main(void) {
 }
 ```
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-28 at 2.35.22 PM.png" alt="Screen Shot 2023-04-28 at 2.35.22 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-28 at 2.35.22 PM.png" alt="Screen Shot 2023-04-28 at 2.35.22 PM" style="zoom:50%;" />
 
 
 
@@ -1997,7 +1771,7 @@ for (i = 0; i < N; i++)
 		a[i] = b[i] * c[i];
 ```
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-28 at 2.40.01 PM.png" alt="Screen Shot 2023-04-28 at 2.40.01 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-28 at 2.40.01 PM.png" alt="Screen Shot 2023-04-28 at 2.40.01 PM" style="zoom:50%;" />
 
 ##### Multi-threaded process
 
@@ -2013,7 +1787,7 @@ int main(void) {
 }
 ```
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-28 at 2.40.37 PM.png" alt="Screen Shot 2023-04-28 at 2.40.37 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-28 at 2.40.37 PM.png" alt="Screen Shot 2023-04-28 at 2.40.37 PM" style="zoom:50%;" />
 
 - Parallel computation
 - Not achievable by process forking!
@@ -2095,7 +1869,7 @@ int main(void) {
   - Thread-specific information
   - Stack pointer, PC, thread state, register values, pointer to PCB, etc.
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-04-28 at 2.56.18 PM.png" alt="Screen Shot 2023-04-28 at 2.56.18 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-04-28 at 2.56.18 PM.png" alt="Screen Shot 2023-04-28 at 2.56.18 PM" style="zoom:50%;" />
 
 #### Differences between threads and processes (Threads vs. Process) (Optional Reading)
 
@@ -2114,313 +1888,6 @@ int main(void) {
   - Communication between processes through kernel-managed IPCs
   - More expensive creation and context switch.
 
-
-
-# 4/28 Discussion
-
-### ECS 150 - Project 2
-
-#### Assignment
-
-- Assignment released on Wednesday
-- Due in 2 weeks: Thur, May 11th
-- Three parts
-  - Queue API
-  - User-level thread library
-  - Semaphore API
-
-#### Teamwork
-
-Two options:
-1. Keep the same partner as P1
-   - (But you'll have to change partner for P3)
-2. Change partner
-   - (And you'll be able to keep the same new partner for P3 if you'd like)
-
-
-
-#### Goal #1: queue API
-
-- Most pieces of software need typical data structure implementations
-  - Lists, stacks, queues, hashtables, dictionaries, etc.
-
-- In many languages, directly included in language itself
-  - Python (`mylist = ["apple", "banana", "cherry"]`), Javascript, Perl, etc.
-
-- In some other languages, usually need to develop them from scratch
-  - Especially true in C and in system programming
-    - Linux: linux/include/linux/list.h
-    - Glibc: glibc/include/list.h
-    - GCC: gcc/gcc/lists.c
-  - Need very robust containers:
-    - Clear API,
-    - No memory leaks,
-    - Stable,
-    - Flexible,
-    - Etc.
-
-For this project, implement a queue library which API is provided3 / 19
-
-
-
-#### Pointers
-
-##### `void *`, a special kind of pointer
-
-```c
-int queue_enqueue(queue_t queue, void *data);
-int queue_dequeue(queue_t queue, void **data);
-...
-```
-
-- `void*` is an untyped pointer
-- Contains an address, but can't assume the type of the pointed content
-
-#### Double pointers
-
-- A double pointer is simply the address of a pointer.
-
-```c
-int a = 2;
-int b = 4;
-void change_ptr(int **ptr)
-{
-    *ptr = &b;
-}
-
-void change_val(int *ptr)
-{
-    *ptr += 1;
-}
-
-int main(void)
-{
-    int *c = &a;
-  
-    printf("%d\n", *c);
-  
-    change_val(c);
-    printf("%d\n", *c);
-  
-    change_ptr(&c);
-    printf("%d\n", *c);
-  
-    return 0;
-}
-```
-
-###### Exection
-
-```c
-2
-3
-4
-```
-
-##### Variables vs pointers
-
-
-
-
-
-#### Goal #2: uthread library
-
-- Write a thread library at user level
-  - Kernel sees and schedules one process
-  - Inside the process, can schedule multiple threads of execution
-
-```c
-#include <uthread.h>
-void thread_b(void *arg) {
-    /* Do stuff */
-    ...
-}
-void thread_a(void *arg) {
-    uthread_create(thread_b, NULL);
-    /* Do stuff */
-    ...
-}
-int main(void) {
-    uthread_run(false, thread_a, NULL);
-    return 0;
-}
-```
-
-#### Goal #3: semaphore API
-
-
-
-### Makefile
-
-- We have four files, `main.c`, `fact.h`, `fact.c`, `README.md`
-
-```makefile
-all: myfact README.html
-
-myfact: main.o fact.o
-	gcc -Wall -Wextra -Werror -o myfact main.o fact.o
-
-main.o: main.c fact.h
-	gcc -Wall -Wextra -Werror -c -o main.o main.c
-
-fact.o: fact.c fact.h
-	gcc -Wall -Wextra -Werror -c -o fact.o fact.c
-
-README.html: README.md
-	pandoc -o README.html README.md
-
-clean:
-	rm -f myfact main.o fact.o README.html
-```
-
-##### Automated variable
-
-```makefile
-all: myfact README.html
-
-myfact: main.o fact.o
-	gcc -Wall -Wextra -Werror -o $@ $^
-
-main.o: main.c fact.h
-	gcc -Wall -Wextra -Werror -c -o $@ $<
-
-fact.o: fact.c fact.h
-	gcc -Wall -Wextra -Werror -c -o $@ $<
-
-README.html: README.md
-	pandoc -o $@ $<
-
-clean:
-	rm -f myfact main.o fact.o README.html
-```
-
-
-
-```makefile
-CC := gcc
-
-all: myfact README.html
-
-myfact: main.o fact.o
-	$(CC) -Wall -Wextra -Werror -o $@ $^
-
-%.o: %.c fact.h
-	$(CC) -Wall -Wextra -Werror -c -o $@ $<
-
-%.html: %.md
-	pandoc -o $@ $<
-
-clean:
-	rm -f myfact main.o fact.o README.html
-
-```
-
-```makefile
-CC := gcc
-CFLAGS := -Wall -Wextra -Werror
-
-all: myfact README.html
-
-myfact: main.o fact.o
-	$(CC) $(CFLAGS) -o $@ $^
-
-%.o: %.c fact.h
-	$(CC) $(CFLAGS) -c -o $@ $<
-
-%.html: %.md
-	pandoc -o $@ $<
-
-clean:
-	rm -f myfact main.o fact.o README.html
-	
-```
-
-
-
-```makefile
-targets := myfact README.html
-objs := main.o fact.o
-
-CC := gcc
-CFLAGS := -Wall -Wextra -Werror
-
-all: $(targets)
-
-myfact: main.o fact.o
-	$(CC) $(CFLAGS) -o $@ $^
-
-%.o: %.c fact.h
-	$(CC) $(CFLAGS) -c -o $@ $<
-
-%.html: %.md
-	pandoc -o $@ $<
-
-clean:
-	rm -f $(targets) $(objs)
-```
-
-
-
-```makefile
-targets := myfact README.html
-objs := main.o fact.o
-
-CC := gcc
-CFLAGS := -Wall -Wextra -Werror
-
-all: $(targets)
-
-myfact: main.o fact.o
-	@echo "CC	$@"
-	@$(CC) $(CFLAGS) -o $@ $^
-
-%.o: %.c fact.h
-	@echo "CC	$@"
-	@$(CC) $(CFLAGS) -c -o $@ $<
-
-%.html: %.md
-	@echo "PANDOC	$@"
-	@pandoc -o $@ $<
-
-clean:
-	@echo "CLEAN"
-	@rm -f $(targets) $(objs)
-```
-
-​	
-
-```makefile
-targets := myfact README.html
-objs := main.o fact.o
-
-CC := gcc
-CFLAGS := -Wall -Wextra -Werror
-
-ifneq ($(V), 1)
-Q = @
-endif
-
-all: $(targets)
-
-myfact: main.o fact.o
-	@echo "CC	$@"
-	$(Q)$(CC) $(CFLAGS) -o $@ $^
-
-%.o: %.c fact.h
-	@echo "CC	$@"
-	$(Q)$(CC) $(CFLAGS) -c -o $@ $<
-
-%.html: %.md
-	@echo "PANDOC	$@"
-	$(Q)pandoc -o $@ $<
-
-clean:
-	@echo "CLEAN"
-	$(Q)rm -f $(targets) $(objs)
-```
-
-
-
 # Lecture 5/1
 
 ### Recap
@@ -2429,18 +1896,18 @@ clean:
 
 - Composition of independently executing task
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.17.41 PM.png" alt="Screen Shot 2023-05-06 at 7.17.41 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.17.41 PM.png" alt="Screen Shot 2023-05-06 at 7.17.41 PM" style="zoom:50%;" />
 
 - Opposite to sequential execution
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.17.53 PM.png" alt="Screen Shot 2023-05-06 at 7.17.53 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.17.53 PM.png" alt="Screen Shot 2023-05-06 at 7.17.53 PM" style="zoom:50%;" />
 
 #### Parallelism
 
 - Specific type of concurrency
 - Requires multiple CPUs	
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.18.21 PM.png" alt="Screen Shot 2023-05-06 at 7.18.21 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.18.21 PM.png" alt="Screen Shot 2023-05-06 at 7.18.21 PM" style="zoom:50%;" />
 
 #### Processes vs threads
 
@@ -2454,7 +1921,7 @@ clean:
 
   `Multiple threads running in one process (more efficient)`
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.18.46 PM.png" alt="Screen Shot 2023-05-06 at 7.18.46 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.18.46 PM.png" alt="Screen Shot 2023-05-06 at 7.18.46 PM" style="zoom:50%;" />
 
 
 
@@ -2499,15 +1966,15 @@ void thread_exit(int ret);
   - Values of CPU registers, PC and SP must be switched
   - Memory protection remains since threads share the same address space
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.28.16 PM.png" alt="Screen Shot 2023-05-06 at 7.28.16 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.28.16 PM.png" alt="Screen Shot 2023-05-06 at 7.28.16 PM" style="zoom:50%;" />
 
 ###### Single-threaded processes
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.28.51 PM.png" alt="Screen Shot 2023-05-06 at 7.28.51 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.28.51 PM.png" alt="Screen Shot 2023-05-06 at 7.28.51 PM" style="zoom:50%;" />
 
 ###### Multi-threaded processes
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.29.08 PM.png" alt="Screen Shot 2023-05-06 at 7.29.08 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.29.08 PM.png" alt="Screen Shot 2023-05-06 at 7.29.08 PM" style="zoom:50%;" />
 
 ###### Context switch procedure
 
@@ -2522,7 +1989,7 @@ void thread_exit(int ret);
   - Mode switch to user mode
 - New thread B is running
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.30.48 PM.png" alt="Screen Shot 2023-05-06 at 7.30.48 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.30.48 PM.png" alt="Screen Shot 2023-05-06 at 7.30.48 PM" style="zoom:50%;" />
 
 ##### User-level threads (many-to-one) `Project 2`
 
@@ -2534,11 +2001,11 @@ void thread_exit(int ret);
 - Switching between threads doesn't involve a (kernel-managed) context
   switch
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.33.03 PM.png" alt="Screen Shot 2023-05-06 at 7.33.03 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.33.03 PM.png" alt="Screen Shot 2023-05-06 at 7.33.03 PM" style="zoom:50%;" />
 
 ###### Multi-threaded processes at user-level
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.36.44 PM.png" alt="Screen Shot 2023-05-06 at 7.36.44 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.36.44 PM.png" alt="Screen Shot 2023-05-06 at 7.36.44 PM" style="zoom:50%;" />
 
 ###### Context switch procedure (sort of)
 
@@ -2549,7 +2016,7 @@ void thread_exit(int ret);
 - Library restores thread B's state (from B's custom TCB)
 - New thread B is running
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.38.09 PM.png" alt="Screen Shot 2023-05-06 at 7.38.09 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.38.09 PM.png" alt="Screen Shot 2023-05-06 at 7.38.09 PM" style="zoom:50%;" />
 
 ###### Pitfall
 
@@ -2597,7 +2064,7 @@ Cons
    - Traditional application model
    - Mapping 1:1 with kernel-level threads 
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.44.23 PM.png" alt="Screen Shot 2023-05-06 at 7.44.23 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.44.23 PM.png" alt="Screen Shot 2023-05-06 at 7.44.23 PM" style="zoom:50%;" />
 
 2. Multi-threaded processes with user-level threads
    - Threads are managed in user-space
@@ -2606,7 +2073,7 @@ Cons
    - Scheduled by user-space library scheduler
    - TCBs in user-space library data structures
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.45.17 PM.png" alt="Screen Shot 2023-05-06 at 7.45.17 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.45.17 PM.png" alt="Screen Shot 2023-05-06 at 7.45.17 PM" style="zoom:50%;" />
 
 
 
@@ -2616,13 +2083,13 @@ Cons
    - TCBs and PCBs in kernel
    - Scheduled by kernel scheduler
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.46.27 PM.png" alt="Screen Shot 2023-05-06 at 7.46.27 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.46.27 PM.png" alt="Screen Shot 2023-05-06 at 7.46.27 PM" style="zoom:50%;" />
 
 4. In-kernel threads (aka *kernel threads*)
    - The kernel itself can be multi-threaded
    - E.g., idle thread, thread migration, OOM reaper, disk writeback, etc.
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.46.38 PM.png" alt="Screen Shot 2023-05-06 at 7.46.38 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.46.38 PM.png" alt="Screen Shot 2023-05-06 at 7.46.38 PM" style="zoom:50%;" />
 
 ### One more flavor: cooperative vs preemptive
 
@@ -2644,7 +2111,7 @@ Cons
 
 ##### Indeterministic scheduling
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 7.48.48 PM.png" alt="Screen Shot 2023-05-06 at 7.48.48 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 7.48.48 PM.png" alt="Screen Shot 2023-05-06 at 7.48.48 PM" style="zoom:50%;" />
 
 
 
@@ -2889,12 +2356,12 @@ int main(void)
 
 - Also possible (yet probably very rare)...
 
-	```bash
+  ```bash
   $ ./a.out
   2
   $ ./a.out
   1
-	```
+  ```
 
 `Thread A might run a little bit on assembly code, and Thread B might take place and run a little bit... which messed up the process.`
 
@@ -2907,7 +2374,7 @@ int main(void)
 - Indeterministic scheduling
 - Sequential execution, concurrent execution, parallelism, etc.
 
-<img src="Midterm2_Lecture.assets/Screen Shot 2023-05-06 at 8.10.43 PM.png" alt="Screen Shot 2023-05-06 at 8.10.43 PM" style="zoom:50%;" />
+<img src="Midterm 2 Review.assets/Screen Shot 2023-05-06 at 8.10.43 PM.png" alt="Screen Shot 2023-05-06 at 8.10.43 PM" style="zoom:50%;" />
 
 ##### Instruction reordering
 
