@@ -87,3 +87,78 @@ A competitive market equilibrium if a bunch of conditions hold:
 
 Asymetric information
 
+
+
+# 05-16 Lecture
+
+(start from 1:01:30)
+
+### Types of Potential Borrowers
+
+- Lender knows that two types of potential borrowers exist:
+  - SAFE type (high quality)
+  - RISKY type (low quality)
+- If lender knows
+  - SAFE type, LOW interest rate
+  - RISKY type, HIGH interest rate
+
+###  But under Asymmetric Information
+
+- Lenders CANNOT distinguish between safe and risky types.
+- Lender will end up having two choices for the interest rate:
+  - 1. Set it low enough so that BOTH types will want the loan
+    2. Give up on SAFE type and set it high, deal only with RISKY types
+
+###  General Strategy
+
+E(ys): Expected income for Safe Type of borrower
+
+E(yR): Expected income for Risky Type of borrower
+
+$E(\pi _S)$: Expected profit of lender on a loan to a Safe Type of borrower
+
+$E(\pi _R)$: Expected profit of lender on a loan to a Risky Type of borrower
+
+### Example
+
+##### Entreprenuers
+
+- Two Types of Entrepreneurs
+  - Both have $0 savings
+  - Both need $100 loan
+  - Both want to maximize E(y)
+  - Both must earn E(y) >= 0
+- Half are Safe Types
+  - Revenue = 180 with prob 1 (always succeed)
+- Half are Risky Types
+  - Revenue = 260 with probability of 0.5 (success)
+  - Revenue = 0 with probablity of 0.5 (fail)
+
+#####  Lender
+
+- Want to maximize $E(\pi)$
+- Opportunity Cost: 100*(1+0.1) = 110
+
+- Offers **limited Liability** loans
+  - Borrower doesn't have to repay **anything** if project fails
+- Must earn $E(\pi)\ge 0$
+
+##### Borrowers' Expected Income as a Function of i
+
+- Expected Income of Safe Type $E(y_S)$
+  - $E(y_s) = 1*[180-100*(1+i)]$
+  - $E(y_S) = 80-100i$
+- Expected Income of Risky Type
+  - $E(y_R) = 0.5[260-100(1+i)] + 0.5*[0-0]$
+  - $E(y_R) = 80-50i$
+
+##### Lender's Expected Profit as a Function of i
+
+- Lender's Expected Profit on loan to Safe Type:
+  - $E(\pi_S) = 1*[100(1+i) - 100*(1+0.1)]$
+  - $E(\pi_S) = -10+100i$
+- Lender's Expected Profit on loan to Risky type:
+  - $E(\pi_S) = 0.5[100(1+i)-100(1+0.1)] + 0.5[0-100(1+0.1)]$
+  - $E(\pi_S) = -60+50i$
+
+ 
